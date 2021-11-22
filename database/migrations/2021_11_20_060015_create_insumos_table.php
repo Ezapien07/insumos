@@ -17,9 +17,11 @@ class CreateInsumosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('descripcion');
-            $table->integer('codigo');
-            $table->integer('cantidad');
+            $table->string('codigo');
+            $table->integer('cantidad')->default(0);
+            $table->integer('cantidad_minima')->default(3);
             $table->enum('estatus',['Activo','Inactivo']);
+            $table->enum('tipo_producto',['Consumible','No Consumible']);
             $table->timestamps();
         });
     }

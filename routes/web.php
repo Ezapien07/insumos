@@ -14,5 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.layout');
+});
+
+Route::get('/insumos', 'InsumosControlador@consultar')->name('insumos');
+Route::group(['prefix' => 'insumos/acciones'], function () {
+    Route::post('/agregar', 'InsumosControlador@Agregar');
+    /*Route::post('/buscar', 'MateriaPrimaController@buscar');
+    Route::post('/modificar', 'MateriaPrimaController@modificar');
+    Route::post('/eliminar', 'MateriaPrimaController@eliminar');
+    Route::post('/buscarExistente', 'MateriaPrimaController@buscarExistente');
+    Route::post('/activar', 'MateriaPrimaController@activar');*/
 });

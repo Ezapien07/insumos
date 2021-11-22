@@ -15,7 +15,7 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_empleado')->references('id')->on('empleado');
+            $table->foreignId('id_empleado')->references('id')->on('empleados');
             $table->string('insumo');
             $table->string('link_op1');
             $table->integer('precio_op1');
