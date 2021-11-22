@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
-    <title>Patelería "La Luz"</title>
+    <title>Insumos de Oficina</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!--alerts CSS -->
@@ -209,8 +209,8 @@
                         <li class="nav-devider"></li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cake-variant"></i><span class="hide-menu">Producto</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{URL::to('/insumos')}}">Productos activos</a></li>
-                                <li><a href="{{URL::to('/producto_inactivo')}}">Productos inactivos</a></li>
+                                <li><a href="{{URL::to('/insumos')}}">Insumos activos</a></li>
+                                <li><a href="{{URL::to('/insumos_inactivos')}}">Insumos inactivos</a></li>
                                 <li class="nav-devider"></li>
                                 <li><a href="{{URL::to('/reporte_inventario')}}">Reporte de inventario actual</a>
                                 </li>

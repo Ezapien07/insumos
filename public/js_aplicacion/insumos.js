@@ -24,7 +24,7 @@ const insertarInsumo = async () => {
         let minima = $("#txtCantidadMinInsumo").val();
         let consu = document.getElementById("chechInsumoConsumible").checked;
         datos = {
-            nombre:validarCamposLetras(nom),
+            nombre: validarCamposLetras(nom),
             descripcion: validarCamposLetras(desc),
             codigo: validarCamposLetras(codi),
             estatus: 1,
@@ -100,9 +100,92 @@ const insertarInsumo = async () => {
         showNotification("bg-red", salida, "bottom", "right", "", "");
     }
 };
-const modificarInsumo = () => {
+
+const modificarInsumo = async () => {
     let salida = validarCamposInsumos();
-    if (salida) {
+    if (salida === "ok") {
+        let uid = $("#txtIdInsumos").val();
+        let desc = $("#txtDescripcionInsumo").val();
+        let codi = $("#txtCodigoInsumo").val();
+        let nom = $("#txtNombreInsumo").val();
+        let minima = $("#txtCantidadMinInsumo").val();
+        let consu = document.getElementById("chechInsumoConsumible").checked;
+        datos = {
+            id: uid,
+            nombre: validarCamposLetras(nom),
+            descripcion: validarCamposLetras(desc),
+            codigo: validarCamposLetras(codi),
+            estatus: 1,
+            tipo: consu ? true : false,
+            cantidad_minima: minima,
+            _token: $('input[name="_token"]').val(),
+        };
+        swal(
+            {
+                title: "¿Deseas continuar?",
+                text:
+                    "Por favor, confirma que deseas modificar el insumo " +
+                    nom +
+                    ". ",
+                type: "info",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                confirmButtonColor: "#4caf50",
+                confirmButtonText: "Si, modificar",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            },
+            function () {
+                $.ajax({
+                    url: "/insumos/public/insumos/acciones/modificar",
+                    method: "POST",
+                    data: datos,
+                })
+                    .done(function (res) {
+                        console.log(res);
+                        if (res == "OK") {
+                            limpiarInsumos();
+                            swal(
+                                {
+                                    type: "success",
+                                    title: "Correcto",
+                                    text: "Se modifico correctamente el registro.",
+                                    confirmButtonText: "OK",
+                                },
+                                function () {
+                                    location.href = "/insumos/public/insumos";
+                                }
+                            );
+                        } else {
+                            swal(
+                                {
+                                    type: "error",
+                                    title: "Error",
+                                    text: "Ha ocurrido un error al momento de guardar",
+                                    confirmButtonText: "OK",
+                                },
+                                function () {
+                                    location.href = "/insumos/public/insumos";
+                                }
+                            );
+                        }
+                    })
+                    .fail(function (res) {
+                        console.log(res);
+                        swal(
+                            {
+                                type: "error",
+                                title: "Error",
+                                text: "Ha ocurrido un error al momento de guardar",
+                                confirmButtonText: "OK",
+                            },
+                            function () {
+                                location.href = "/insumos/public/insumos";
+                            }
+                        );
+                    });
+            }
+        );
     } else {
         showNotification("bg-red", salida, "bottom", "right", "", "");
     }
@@ -122,4 +205,198 @@ const validarCamposInsumos = () => {
         return "La cantidad minima en stock es de 3 productos. ";
     }
     return "ok";
+};
+
+const detalleInsumos = (uid) => {
+    datos = {
+        id: uid,
+        _token: $('input[name="_token"]').val(),
+    };
+
+    $.ajax({
+        url: "/insumos/public/insumos/acciones/buscar",
+        method: "POST",
+        data: datos,
+    })
+        .done(function (res) {
+            if (res != "ERROR") {
+                limpiarInsumos();
+                $("#txtIdInsumos").val(res.id);
+                $("#txtDescripcionInsumo").val(res.descripcion);
+                $("#txtCodigoInsumo").val(res.codigo);
+                $("#txtNombreInsumo").val(res.nombre);
+                $("#txtCantidadMinInsumo").val(res.cantidad_minima);
+                res.tipo_producto == "Consumible"
+                    ? (document.getElementById(
+                          "chechInsumoConsumible"
+                      ).checked = true)
+                    : (document.getElementById(
+                          "chechInsumoConsumible"
+                      ).checked = false);
+                $("#dlginsumos").modal("show");
+            } else {
+                swal(
+                    {
+                        type: "error",
+                        title: "Error",
+                        text: "Ha ocurrido un error al momento de consultar",
+                        confirmButtonText: "OK",
+                    },
+                    function () {
+                        location.href = "/insumos/public/insumos";
+                    }
+                );
+            }
+        })
+        .fail(function (res) {
+            console.log(res);
+            swal(
+                {
+                    type: "error",
+                    title: "Error",
+                    text: "Ha ocurrido un error al momento de consultar",
+                    confirmButtonText: "OK",
+                },
+                function () {
+                    location.href = "/insumos/public/insumos";
+                }
+            );
+        });
+};
+
+const eliminarInsumos = (uid) => {
+    datos = {
+        id: uid,
+        _token: $('input[name="_token"]').val(),
+    };
+    swal(
+        {
+            title: "¿Deseas continuar?",
+            text: "Por favor, confirma que deseas eliminar el insumo. ",
+            type: "info",
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Si, eliminar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+        },
+        function () {
+            $.ajax({
+                url: "/insumos/public/insumos/acciones/eliminar",
+                method: "POST",
+                data: datos,
+            })
+                .done(function (res) {
+                    console.log(res);
+                    if (res == "OK") {
+                        swal(
+                            {
+                                type: "success",
+                                title: "Correcto",
+                                text: "Se elimino correctamente el registro.",
+                                confirmButtonText: "OK",
+                            },
+                            function () {
+                                location.href = "/insumos/public/insumos";
+                            }
+                        );
+                    } else {
+                        swal(
+                            {
+                                type: "error",
+                                title: "Error",
+                                text: "Ha ocurrido un error al momento de procesar tu solicitud",
+                                confirmButtonText: "OK",
+                            },
+                            function () {
+                                location.href = "/insumos/public/insumos";
+                            }
+                        );
+                    }
+                })
+                .fail(function (res) {
+                    console.log(res);
+                    swal(
+                        {
+                            type: "error",
+                            title: "Error",
+                            text: "Ha ocurrido un error al momento de procesar tu solicitud",
+                            confirmButtonText: "OK",
+                        },
+                        function () {
+                            location.href = "/insumos/public/insumos";
+                        }
+                    );
+                });
+        }
+    );
+};
+const activarInsumos = (uid) => {
+    datos = {
+        id: uid,
+        _token: $('input[name="_token"]').val(),
+    };
+    swal(
+        {
+            title: "¿Deseas continuar?",
+            text: "Por favor, confirma que deseas activar el insumo. ",
+            type: "info",
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#4CAF50",
+            confirmButtonText: "Si, activar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+        },
+        function () {
+            $.ajax({
+                url: "/insumos/public/insumos/acciones/activar",
+                method: "POST",
+                data: datos,
+            })
+                .done(function (res) {
+                    console.log(res);
+                    if (res == "OK") {
+                        swal(
+                            {
+                                type: "success",
+                                title: "Correcto",
+                                text: "Se elimino correctamente el registro.",
+                                confirmButtonText: "OK",
+                            },
+                            function () {
+                                location.href = "/insumos/public/insumos";
+                            }
+                        );
+                    } else {
+                        swal(
+                            {
+                                type: "error",
+                                title: "Error",
+                                text: "Ha ocurrido un error al momento de procesar tu solicitud",
+                                confirmButtonText: "OK",
+                            },
+                            function () {
+                                location.href = "/insumos/public/insumos";
+                            }
+                        );
+                    }
+                })
+                .fail(function (res) {
+                    console.log(res);
+                    swal(
+                        {
+                            type: "error",
+                            title: "Error",
+                            text: "Ha ocurrido un error al momento de procesar tu solicitud",
+                            confirmButtonText: "OK",
+                        },
+                        function () {
+                            location.href = "/insumos/public/insumos";
+                        }
+                    );
+                });
+        }
+    );
 };

@@ -18,11 +18,12 @@ Route::get('/', function () {
 });
 
 Route::get('/insumos', 'InsumosControlador@consultar')->name('insumos');
+Route::get('/insumos_inactivos', 'InsumosControlador@Consultar_Inactivos')->name('insumos');
 Route::group(['prefix' => 'insumos/acciones'], function () {
     Route::post('/agregar', 'InsumosControlador@Agregar');
-    /*Route::post('/buscar', 'MateriaPrimaController@buscar');
-    Route::post('/modificar', 'MateriaPrimaController@modificar');
-    Route::post('/eliminar', 'MateriaPrimaController@eliminar');
-    Route::post('/buscarExistente', 'MateriaPrimaController@buscarExistente');
-    Route::post('/activar', 'MateriaPrimaController@activar');*/
+    Route::post('/buscar', 'InsumosControlador@Buscar');
+    Route::post('/modificar', 'InsumosControlador@Modificar');
+    Route::post('/eliminar', 'InsumosControlador@Eliminar');
+    /*Route::post('/buscarExistente', 'MateriaPrimaController@buscarExistente');*/
+    Route::post('/activar', 'InsumosControlador@Activar');
 });
