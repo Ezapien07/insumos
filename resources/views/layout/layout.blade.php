@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from www.wrappixel.com/demos/admin-templates/material-pro/minisidebar/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Feb 2019 11:12:05 GMT -->
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,9 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
-    <title>Insumos de Oficina</title>
-    <!-- Bootstrap Core CSS -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/logo-icon.png')}}">
+    <title>Sistema de Control de Productos Informáticos</title>
     <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!--alerts CSS -->
     <link href="{{asset('assets/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
@@ -68,17 +64,17 @@
                     <a class="navbar-brand" href="index.html">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon 
+                            <!-- Dark Logo icon -->
                             <img src="{{asset('assets/images/logo-icon_2.png')}}" alt="homepage" class="dark-logo" />
-                            Light Logo icon
-                            <img src="{{asset('assets/images/logo-icon_2.png')}}" alt="homepage" class="light-logo" />-->
+                            <!-- Light Logo icon -->
+                            <img src="{{asset('assets/images/logo-icon_2.png')}}" alt="homepage" class="light-logo" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text --><span>
-                            <!-- dark Logo text 
-                            <img src="{{asset('assets/images/logo-text.png')}}" alt="homepage" class="dark-logo" />-->
-                            <!-- Light Logo text 
-                            <img src="{{asset('assets/images/logo-text.png')}}" class="light-logo" alt="homepage" />-->
+                            <!-- dark Logo text -->
+                            <img src="{{asset('assets/images/logo-text.png')}}" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo text -->
+                            <img src="{{asset('assets/images/logo-text.png')}}" class="light-logo" alt="homepage" />
                         </span>
                     </a>
                 </div>
@@ -142,10 +138,10 @@
                                     <li>
                                         <div class="dw-user-box">
                                             <div class="u-text">
-                                                <h4>Yisus</h4>
+                                                <h4>{{Auth::user()->name}}</h4>
                                                 <p class="text-muted"> <a href="https://www.wrappixel.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e4928596918aa48389858d88ca878b89">
                                                         [email&#160;protected]</a>
-                                                    <a href="#">YUisus</a>
+                                                    <a href="#">{{Auth::user()->email}}</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -179,11 +175,15 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/ventas')}}">Ventas activas</a></li>
                                 <li><a href="{{URL::to('/ventas_inactivas')}}">Ventas canceladas</a></li>
+                                @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                                 <li class="nav-devider"></li>
                                 <li><a href="{{URL::to('/pastelesVendidos')}}">Pasteles más vendidos</a></li>
                                 <li><a href="{{URL::to('/reporte_ventas_dia')}}">Reporte de ventas por día</a></li>
                                 <li><a href="{{URL::to('/reporte_venta_mensual')}}">Reporte de ventas por mes</a></li>
                                 <li><a href="{{URL::to('/reporte_venta_rangoF')}}">Reporte de ventas por un rango de fecha</a></li>
+                                @else
+
+                                @endif
                             </ul>
                         </li>
 
@@ -194,9 +194,13 @@
                                 <li><a href="{{URL::to('/pedidoEspecialFinalizado')}}">Pedidos finalizados</a></li>
                                 <li><a href="{{URL::to('/pedidoEspecialCancelado')}}">Pedidos cancelados</a></li>
                                 <li><a href="{{URL::to('/pedidoEspecialEntregado')}}">Pedidos entregados</a></li>
+
+                                @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                                 <li class="nav-devider"></li>
                                 <li><a href="{{URL::to('/reporte_pedido_semanal')}}">Reporte de pedidos</a></li>
                                 <li><a href="{{URL::to('/reporte_pedido_mensual')}}">Reporte de pedidos Mensuales</a></li>
+                                @else
+                                @endif
                             </ul>
                         </li>
 
@@ -206,33 +210,55 @@
                                 <li><a href="{{URL::to('/cliente_inactivos')}}">Clientes inactivos</a></li>
                             </ul>
                         </li>
+
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
                         <li class="nav-devider"></li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cake-variant"></i><span class="hide-menu">Producto</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cake-variant"></i><span class="hide-menu">Insumos</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/insumos')}}">Insumos activos</a></li>
                                 <li><a href="{{URL::to('/insumos_inactivos')}}">Insumos inactivos</a></li>
+                                @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                                 <li class="nav-devider"></li>
                                 <li><a href="{{URL::to('/reporte_inventario')}}">Reporte de inventario actual</a>
                                 </li>
+                                @else
+
+                                @endif
                             </ul>
                         </li>
+                        @else
+
+                        @endif
+                        @if( \Auth::user()->rol== "Administrador")
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu">Categoría</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/categoria')}}">Categorías activas</a></li>
                                 <li><a href="{{URL::to('/categoria_inactivas')}}">Categorías inactivas</a></li>
                             </ul>
                         </li>
+                        @else
+
+                        @endif
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
                         <li class="nav-devider"></li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart-outline"></i><span class="hide-menu">Orden de
                                     compra</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/ordenCompra')}}">Ordenes de compra activas</a></li>
                                 <li><a href="{{URL::to('/ordenCompraCompletada')}}">Ordenes de compra entregadas</a></li>
+                                @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                                 <li class="nav-devider"></li>
                                 <li><a href="{{URL::to('/reporte_ordenCompra_men')}}">Reporte Orden de Compra mensual</a>
                                 </li>
+                                @else
+
+                                @endif
                             </ul>
                         </li>
+                        @else
+
+                        @endif
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cake-layered"></i><span class="hide-menu">Materia prima</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/materiaPrima')}}">Materia prima activa</a></li>
@@ -242,12 +268,20 @@
                                 </li>
                             </ul>
                         </li>
+                        @else
+
+                        @endif
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-domain"></i><span class="hide-menu">Proveedor</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/proveedor')}}">Provedores activos</a></li>
                                 <li><a href="{{URL::to('/proveedor_inactivo')}}">Proveedores inactivos</a></li>
                             </ul>
                         </li>
+                        @else
+
+                        @endif
+                        @if( \Auth::user()->rol== "Administrador")
                         <li class="nav-devider"></li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Empleado</span></a>
                             <ul aria-expanded="false" class="collapse">
@@ -256,6 +290,9 @@
                                 <li><a href="{{URL::to('/restablecerPass')}}">Restablecer contraseña</a></li>
                             </ul>
                         </li>
+                        @else
+
+                        @endif
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -351,6 +388,7 @@
     <!-- This is data table -->
     <script src="{{asset('assets/plugins/datatables/dataTables.js')}}"></script>
     <!-- start - This is for export functionality only -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -360,34 +398,25 @@
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
     <!-- end - This is for export functionality only -->
     <!-- ============================================================== -->
-    <script>
-        $('#tbEjemplo').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        });
 
+
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="{{asset('assets/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
+
+    <script>
         $('#tbCategoria').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
         });
-
-        $('#tbCategoriaInactiva').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        });
     </script>
-    <!-- Style switcher -->
-    <!-- ============================================================== -->
-    <script src="{{asset('assets/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
+
+    <script src="{{asset('js_aplicacion/general.js')}}"></script>
+    <script src="{{asset('js_aplicacion/insumos.js')}}"></script>
     <!-- Archivos js de la aplicación 
     
-    <script src="{{asset('js_aplicacion/categoria.js')}}"></script>
     <script src="{{asset('js_aplicacion/materiaPrima.js')}}"></script>
     <script src="{{asset('js_aplicacion/cliente.js')}}"></script>
     <script src="{{asset('js_aplicacion/empleado.js')}}"></script>
@@ -396,9 +425,9 @@
     <script src="{{asset('js_aplicacion/ventas.js')}}"></script>
     <script src="{{asset('js_aplicacion/ordenCompra.js')}}"></script>
     <script src="{{asset('js_aplicacion/pedidoEspecial.js')}}"></script>
-    <script src="{{asset('js_aplicacion/proveedor.js')}}"></script>-->
-    <script src="{{asset('js_aplicacion/general.js')}}"></script>
-    <script src="{{asset('js_aplicacion/insumos.js')}}"></script>
+    <script src="{{asset('js_aplicacion/proveedor.js')}}"></script>
+    <script src="{{asset('js_aplicacion/reportepedidoEspecial.js')}}"></script>-->
+
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- jspdf -->
@@ -406,7 +435,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.js"></script>
 
 </body>
-
-<!-- Mirrored from www.wrappixel.com/demos/admin-templates/material-pro/minisidebar/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Feb 2019 11:12:10 GMT -->
 
 </html>

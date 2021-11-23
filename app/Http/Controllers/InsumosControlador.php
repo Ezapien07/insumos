@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Insumos;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InsumosControlador extends Controller
 {
@@ -30,6 +31,7 @@ class InsumosControlador extends Controller
             } else {
                 $mInsumos->tipo_producto = "No Consumible";
             }
+            $mInsumos->user_id =  Auth::user()->id;
             $mInsumos->save();
             return "OK";
         } catch (Exception $err) {

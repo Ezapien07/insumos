@@ -18,6 +18,7 @@ class CreateInsumosTable extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->string('codigo');
+            $table->string('user_id');
             $table->integer('cantidad')->default(0);
             $table->integer('cantidad_minima')->default(3);
             $table->enum('estatus',['Activo','Inactivo']);
