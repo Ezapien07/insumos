@@ -1,7 +1,7 @@
 /****************************************************
  * Notificaciones
  ****************************************************/
- function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
+function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
     if (colorName === null || colorName === '') {
         colorName = 'bg-black';
     }
