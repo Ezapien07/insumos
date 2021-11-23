@@ -39,4 +39,20 @@ class LoginController extends Controller
             return 1; //Credenciales incorrectas
         }
     }
+
+    public function loginApi(Request $request){
+        $credenciales = $request -> only('email', 'password');
+        if(!Auth::attempt($credenciales)){
+            return response()->json(['Error!'=>'401 - Credenciales incorrectas'], 401);
+        }
+        //ignoren ese error
+        $token = Auth::user()->createToken('client')->accessToken;
+
+        return response()->json([
+            'nombre_usuario' => Auth::user()['name'],
+            'rol'=>Auth::user()['rol'],
+            'access_token' => $token
+        ]);
+    
+    }
 }

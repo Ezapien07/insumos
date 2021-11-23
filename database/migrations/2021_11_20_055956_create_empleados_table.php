@@ -20,16 +20,14 @@ class CreateEmpleadosTable extends Migration
             $table->string('apeMaterno');
             $table->string('calle');
             $table->integer('num');
-            $table->enum('rol',['Administrador', 'Directivo','Almacen','Empleado','Contador']);
             $table->string('colonia');
             $table->string('estado');
-            $table->string('municipio');
+            $table->integer('municipio')->default(0);
+            $table->integer('codigo_postal')->default(0);
             $table->string('curp');
             $table->string('rfc');
-            $table->string('correo');
             $table->integer('cp');
-            $table->string('password');
-            $table->enum('estatus',['Activo','Inactivo']);
+            $table->foreignId('id_user')->references('id')->on('users');
             $table->timestamps();
         });
     }
