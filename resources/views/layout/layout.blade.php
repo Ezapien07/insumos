@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
-    <title>Patelería "La Luz"</title>
-    <!-- Bootstrap Core CSS -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/logo-icon.png')}}">
+    <title>Sistema de Control de Productos Informáticos</title>
     <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!--alerts CSS -->
     <link href="{{asset('assets/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
@@ -39,7 +39,7 @@
 <![endif]-->
 </head>
 
-<body class="fix-header fix-sidebar card-no-border" onload="setInterval('consultarNotificaciones()', 10000);">
+<body class="fix-header fix-sidebar card-no-border">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -213,10 +213,10 @@
 
                         @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
                         <li class="nav-devider"></li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cake-variant"></i><span class="hide-menu">Producto</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cake-variant"></i><span class="hide-menu">Insumos</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{URL::to('/producto')}}">Productos activos</a></li>
-                                <li><a href="{{URL::to('/producto_inactivo')}}">Productos inactivos</a></li>
+                                <li><a href="{{URL::to('/insumos')}}">Insumos activos</a></li>
+                                <li><a href="{{URL::to('/insumos_inactivos')}}">Insumos inactivos</a></li>
                                 @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                                 <li class="nav-devider"></li>
                                 <li><a href="{{URL::to('/reporte_inventario')}}">Reporte de inventario actual</a>
@@ -388,6 +388,7 @@
     <!-- This is data table -->
     <script src="{{asset('assets/plugins/datatables/dataTables.js')}}"></script>
     <!-- start - This is for export functionality only -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -397,13 +398,25 @@
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
     <!-- end - This is for export functionality only -->
     <!-- ============================================================== -->
-    
+
+
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="{{asset('assets/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
-    <!-- Archivos js de la aplicación -->
+
+    <script>
+        $('#tbCategoria').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    </script>
+
     <script src="{{asset('js_aplicacion/general.js')}}"></script>
-    <script src="{{asset('js_aplicacion/categoria.js')}}"></script>
+    <script src="{{asset('js_aplicacion/insumos.js')}}"></script>
+    <!-- Archivos js de la aplicación 
+    
     <script src="{{asset('js_aplicacion/materiaPrima.js')}}"></script>
     <script src="{{asset('js_aplicacion/cliente.js')}}"></script>
     <script src="{{asset('js_aplicacion/empleado.js')}}"></script>
@@ -413,7 +426,8 @@
     <script src="{{asset('js_aplicacion/ordenCompra.js')}}"></script>
     <script src="{{asset('js_aplicacion/pedidoEspecial.js')}}"></script>
     <script src="{{asset('js_aplicacion/proveedor.js')}}"></script>
-    <script src="{{asset('js_aplicacion/reportepedidoEspecial.js')}}"></script>
+    <script src="{{asset('js_aplicacion/reportepedidoEspecial.js')}}"></script>-->
+
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- jspdf -->
@@ -421,4 +435,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.js"></script>
 
 </body>
+
 </html>

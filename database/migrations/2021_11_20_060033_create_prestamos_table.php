@@ -18,7 +18,7 @@ class CreatePrestamosTable extends Migration
             $table->date('fechaSolicitud');
             $table->string('observaciones');
             $table->date('fechaEntrega')->nullable(); //permite ser null 
-            $table->foreignId('id_empleado')->references('id')->on('empleado');
+            $table->foreignId('id_empleado')->references('id')->on('empleados');
             $table->foreignId('id_insumo')->references('id')->on('insumos');
             $table->timestamps();
         });
