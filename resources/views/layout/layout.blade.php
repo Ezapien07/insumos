@@ -32,12 +32,6 @@
 
     <!-- Link para selector-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -169,31 +163,16 @@
                                 <li><a href="{{URL::to('/cliente_inactivos')}}">Clientes inactivos</a></li>
                             </ul>
                         </li>
-
-                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
-                        <li class="nav-devider"></li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cake-variant"></i><span class="hide-menu">Insumos</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{URL::to('/insumos')}}">Insumos activos</a></li>
-                                <li><a href="{{URL::to('/insumos_inactivos')}}">Insumos inactivos</a></li>
-                                @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
-                                <li class="nav-devider"></li>
-                                <li><a href="{{URL::to('/reporte_inventario')}}">Reporte de inventario actual</a>
-                                </li>
-                                @else
-
-                                @endif
-                            </ul>
-                        </li>
                         @else
 
                         @endif
 
-                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
                         <li class="nav-devider"></li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-mac"></i><span class="hide-menu">Insumos</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{URL::to('/liga')}}">Pantalla</a></li>
+                                <li><a href="{{URL::to('/insumos')}}">Insumos activos</a></li>
+                                <li><a href="{{URL::to('/insumos_inactivos')}}">Insumos inactivos</a></li>
                             </ul>
                         </li>
                         @else
@@ -204,7 +183,7 @@
                         <li class="nav-devider"></li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table-column-width"></i><span class="hide-menu">Reportes</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{URL::to('/liga')}}">Pantalla</a></li>
+                                <li><a href="{{URL::to('/reporte_insumos')}}">Reporte de insumos</a></li>
                             </ul>
                         </li>
                         @else
@@ -324,6 +303,20 @@
 
     <script>
         $('#tbCategoria').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $('#tbCantidadInsumos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $('#tbTipoInsumos').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'

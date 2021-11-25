@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pagina_principal', 'LoginController@home')->name('home');
     Route::get('/insumos_inactivos', 'InsumosControlador@Consultar_Inactivos')->name('insumos');
     Route::get('/insumos', 'InsumosControlador@consultar')->name('insumos');
+    Route::get('/reporte_insumos', 'ReportesController@consultarReporteInsumos');
+    Route::get('/consultarInsumos', 'ReportesController@consultarReporteInsumosG');
 });
 
 Route::group(['prefix' => 'insumos/acciones'], function () {
