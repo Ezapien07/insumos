@@ -15,14 +15,17 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_empleado')->references('id')->on('empleados');
+            $table->foreignId('id_user')->references('id')->on('users');
+            $table->foreignId('id_insumo')->references('id')->on('insumos');
             $table->string('insumo');
+            $table->string('clave');
             $table->string('link_op1');
             $table->integer('precio_op1');
+            $table->integer('cantidad_solicitada');
             $table->string('link_op2');
             $table->integer('precio_op2');
-            $table->date('fecha_compra')->nullable();
-            $table->enum('estatus',['PendienteDirectivo','PendienteAdmin','Confirmado','Solicitado']);
+            $table->enum('estatus', ['Activo','Inactivo']);
+            $table->date('fecha_compra')->nullable()->default(date('Y-m-d'));
             $table->timestamps();
         });
     }

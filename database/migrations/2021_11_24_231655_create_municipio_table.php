@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInsumosTable extends Migration
+class CreateMunicipioTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateInsumosTable extends Migration
      */
     public function up()
     {
-        Schema::create('insumos', function (Blueprint $table) {
+        Schema::create('municipio', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('descripcion');
-            $table->integer('codigo');
-            $table->integer('cantidad_minima');
-            $table->enum('tipo_producto',['SI','NO']);
-            $table->enum('estatus',['Activo','Inactivo']);
+            $table->integer('clave');
+            $table->foreignId('id_estado')->references('id')->on('estado');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateInsumosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('insumos');
+        Schema::dropIfExists('municipio');
     }
 }

@@ -18,15 +18,18 @@ class CreateEmpleadosTable extends Migration
             $table->string('nombre');
             $table->string('apePaterno');
             $table->string('apeMaterno');
-            $table->string('calle');
-            $table->integer('num');
-            $table->string('colonia');
-            $table->string('estado');
-            $table->integer('municipio')->default(0);
-            $table->integer('codigo_postal')->default(0);
+
+            $table->string('telefono');
             $table->string('curp');
             $table->string('rfc');
-            $table->integer('cp');
+            $table->string('correo');
+
+            $table->string('calle');
+            $table->integer('num_casa');
+            $table->string('colonia');
+            $table->string('municipio');
+            $table->string('estado');
+            $table->integer('codigo_postal')->default(0);
             $table->foreignId('id_user')->references('id')->on('users');
             $table->timestamps();
         });

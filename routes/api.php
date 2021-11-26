@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/loginApi', 'LoginController@loginApi');
+Route::middleware('auth:api')->get('/empleados/all', 'EmpleadoController@showAll');
+Route::middleware('auth:api')->post('/empleado/create','EmpleadoController@create');
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 }); */

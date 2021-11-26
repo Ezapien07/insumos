@@ -16,9 +16,12 @@ class CreatePrestamosTable extends Migration
         Schema::create('prestamos', function (Blueprint $table) {
             $table->id();
             $table->date('fechaSolicitud');
+            $table->string('motivo'); 
             $table->string('observaciones');
             $table->date('fechaEntrega')->nullable(); //permite ser null 
-            $table->foreignId('id_empleado')->references('id')->on('empleados');
+            $table->enum('estatus',['Activo','Cancelado','Devolución','Almacen']);
+            $table->integer('cantidad')->default(0);
+            $table->foreignId('id_user')->references('id')->on('users');
             $table->foreignId('id_insumo')->references('id')->on('insumos');
             $table->timestamps();
         });
