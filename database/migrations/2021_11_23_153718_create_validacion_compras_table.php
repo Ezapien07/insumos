@@ -17,7 +17,7 @@ class CreateValidacionComprasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_directivo')->nullable();//null al inicio
             $table->unsignedBigInteger('id_contador')->nullable();//null al inicio
-            $table->enum('estatus',['PendienteDirectivo','PendienteContador','Autorizado','Rechazado','Solicitado','Recibido']);
+            $table->enum('estatus',['Pendiente Directivo','Pendiente Contador','Autorizado','Rechazado','Solicitado','Recibido']);
             $table->string('datos_autoriza')->nullable();
             $table->string("fechas_autoriza")->nullable();
             $table->string("motivo_rechazo")->nullable();

@@ -28,6 +28,10 @@
     <!-- You can change the theme colors from here -->
     <link href="{{asset('css/colors/blue.css')}}" id="theme" rel="stylesheet">
     <link href="{{asset('assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -157,7 +161,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
 
-                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" OR \Auth::user()->rol== "Contador")
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" OR \Auth::user()->rol== "Contador" OR \Auth::user()->rol== "Almacen")
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/compras')}}">Compras activas</a></li>
@@ -324,9 +328,10 @@
     </script>
     <script src="{{asset('js_aplicacion/general.js')}}"></script>
     <script src="{{asset('js_aplicacion/insumos.js')}}"></script>
+    <script src="{{asset('js_aplicacion/compras.js')}}"></script>
     <!-- Archivos js de la aplicación 
     
-    <script src="{{asset('js_aplicacion/materiaPrima.js')}}"></script>
+    
     <script src="{{asset('js_aplicacion/cliente.js')}}"></script>
     <script src="{{asset('js_aplicacion/empleado.js')}}"></script>
     <script src="{{asset('js_aplicacion/producto.js')}}"></script>
@@ -342,8 +347,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.js"></script>
 
     <script src="{{asset('assets/plugins/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
     <script>
         $(".select2").select2();
+        $('.my-select').selectpicker({
+            searchPlaceholder: "Insumo a comprar, buscar por clave o nombre",
+        });
     </script>
 
 </body>
