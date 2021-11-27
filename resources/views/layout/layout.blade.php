@@ -165,7 +165,7 @@
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/compras')}}">Compras activas</a></li>
-                                <li><a href="{{URL::to('/compras_inactivas')}}">Clientes inactivos</a></li>
+                                <li><a href="{{URL::to('/compras_inactivas')}}">Compras inactivas</a></li>
                             </ul>
                         </li>
                         @else
