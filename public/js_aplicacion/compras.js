@@ -761,7 +761,7 @@ const recibir = () => {
 
 const aceptarCompraDirectivo = () => {
     let uid = $("#txtIdCompraDetail").val();
-    let nombre =$('#txtInsumosCompraDetail').val();
+    let nombre = $("#txtInsumosCompraDetail").val();
 
     let datos = {
         id: uid,
@@ -797,7 +797,8 @@ const aceptarCompraDirectivo = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras_directivo";
+                                location.href =
+                                    "/insumos/public/compras_directivo";
                             }
                         );
                     } else {
@@ -809,7 +810,8 @@ const aceptarCompraDirectivo = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras_directivo";
+                                location.href =
+                                    "/insumos/public/compras_directivo";
                             }
                         );
                     }
@@ -829,17 +831,16 @@ const aceptarCompraDirectivo = () => {
                 });
         }
     );
-
 };
 
 const guardarRechazoDirectivo = () => {
     let uid = $("#txtIdCompraDetail").val();
-    let mmotivo_rechazo = $('#txtMotivoRechazoDirectivo').val();
+    let mmotivo_rechazo = $("#txtMotivoRechazoDirectivo").val();
 
     let datos = {
         id: uid,
         estatus: "Rechazado Directivo",
-        motivo_rechazo:mmotivo_rechazo,
+        motivo_rechazo: mmotivo_rechazo,
         _token: $('input[name="_token"]').val(),
     };
     swal(
@@ -871,7 +872,8 @@ const guardarRechazoDirectivo = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras_directivo";
+                                location.href =
+                                    "/insumos/public/compras_directivo";
                             }
                         );
                     } else {
@@ -883,7 +885,8 @@ const guardarRechazoDirectivo = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras_directivo";
+                                location.href =
+                                    "/insumos/public/compras_directivo";
                             }
                         );
                     }
@@ -903,51 +906,79 @@ const guardarRechazoDirectivo = () => {
                 });
         }
     );
-
 };
 
 const aceptarCompraContador = () => {
-    let uid = $("#txtIdCompraDetail").val();
-    let nombre =$('#txtInsumosCompraDetail').val();
-
-    let datos = {
-        id: uid,
-        estatus: "Aceptado Contador",
-        _token: $('input[name="_token"]').val(),
-    };
-    swal(
-        {
-            title: "¿Deseas continuar?",
-            text: "Por favor, decea aceptar la compra del insumo " + nombre,
-            type: "info",
-            showCancelButton: true,
-            cancelButtonText: "Cancelar",
-            confirmButtonColor: "#4caf50",
-            confirmButtonText: "Si, aceptar",
-            closeOnConfirm: false,
-            showLoaderOnConfirm: true,
-        },
-        function () {
-            $.ajax({
-                url: "/insumos/public/compras/acciones/contador",
-                method: "POST",
-                data: datos,
-            })
-                .done(function (res) {
-                    if (res == "OK") {
-                        limpiarCamposComprasRechazo();
-                        swal(
-                            {
-                                type: "success",
-                                title: "Correcto",
-                                text: "Se registro correctamente la aceptación.",
-                                confirmButtonText: "OK",
-                            },
-                            function () {
-                                location.href = "/insumos/public/compras_contador";
-                            }
-                        );
-                    } else {
+    let uid = $("#txtIdCompraInsumoAceptar").val();
+    let nombre = $("#txtInsumosSolicitado").val();
+    let producto_seleccionado;
+    let precio_producto;
+    let total;
+    document.getElementById("checkOpcion2").checked = false;
+    if (document.getElementById("checkOpcion2").checked == true) {
+        producto_seleccionado = "Opcion 2";
+        precio_produc = $("#txtprecioOpc2").val();
+        total = parseInt(precio_producto) * parseInt($("#txtTotalProductos").val());
+        let datos = {
+            id: uid,
+            estatus: "Aceptado Contador",
+            producto_comprar: producto_seleccionado,
+            precio_producto: precio_produc,
+            total_pagar: total,
+            _token: $('input[name="_token"]').val(),
+        };
+        console.log(datos);
+        swal(
+            {
+                title: "¿Deseas continuar?",
+                text: "Por favor, decea aceptar la compra del insumo " + nombre,
+                type: "info",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                confirmButtonColor: "#4caf50",
+                confirmButtonText: "Si, aceptar",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            },
+            function () {
+                $.ajax({
+                    url: "/insumos/public/compras/acciones/contador",
+                    method: "POST",
+                    data: datos,
+                })
+                    .done(function (res) {
+                        console.log(res);
+                        if (res == "OK") {
+                            limpiarCamposComprasRechazo();
+                            swal(
+                                {
+                                    type: "success",
+                                    title: "Correcto",
+                                    text: "Se registro correctamente la aceptación.",
+                                    confirmButtonText: "OK",
+                                },
+                                function () {
+                                    location.href =
+                                        "/insumos/public/compras_contador";
+                                }
+                            );
+                        } else {
+                            swal(
+                                {
+                                    type: "error",
+                                    title: "Error",
+                                    text: "Ha ocurrido un error al momento de guardar",
+                                    confirmButtonText: "OK",
+                                },
+                                function () {
+                                    location.href =
+                                        "/insumos/public/compras_contador";
+                                }
+                            );
+                        }
+                    })
+                    .fail(function (res) {
+                        console.log(res);
                         swal(
                             {
                                 type: "error",
@@ -956,37 +987,116 @@ const aceptarCompraContador = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras_contador";
+                                location.href =
+                                    "/insumos/public/compras_contador";
                             }
                         );
-                    }
-                })
-                .fail(function (res) {
-                    swal(
-                        {
-                            type: "error",
-                            title: "Error",
-                            text: "Ha ocurrido un error al momento de guardar",
-                            confirmButtonText: "OK",
-                        },
-                        function () {
-                            location.href = "/insumos/public/compras_contador";
-                        }
-                    );
-                });
+                    });
+            }
+        );
+    } else {
+        if (document.getElementById("checkOpcion1").checked == true) {
+            producto_seleccionado = "Opcion 1";
+            precio_produc = $("#txtprecioOpc1").val();
+            let cant = $("#txtTotalProductos").val();
+            let datos = {
+                id: uid,
+                estatus: "Aceptado Contador",
+                producto_comprar: producto_seleccionado,
+                precio_producto: precio_produc,
+                cantidad: cant,
+                _token: $('input[name="_token"]').val(),
+            };
+            console.log(datos);
+            swal(
+                {
+                    title: "¿Deseas continuar?",
+                    text:
+                        "Por favor, decea aceptar la compra del insumo " +
+                        nombre,
+                    type: "info",
+                    showCancelButton: true,
+                    cancelButtonText: "Cancelar",
+                    confirmButtonColor: "#4caf50",
+                    confirmButtonText: "Si, aceptar",
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                },
+                function () {
+                    $.ajax({
+                        url: "/insumos/public/compras/acciones/contador",
+                        method: "POST",
+                        data: datos,
+                    })
+                        .done(function (res) {
+                            console.log(res);
+                            if (res == "OK") {
+                                limpiarCamposComprasRechazo();
+                                swal(
+                                    {
+                                        type: "success",
+                                        title: "Correcto",
+                                        text: "Se registro correctamente la aceptación.",
+                                        confirmButtonText: "OK",
+                                    },
+                                    function () {
+                                        location.href =
+                                            "/insumos/public/compras_contador";
+                                    }
+                                );
+                            } else {
+                                swal(
+                                    {
+                                        type: "error",
+                                        title: "Error",
+                                        text: "Ha ocurrido un error al momento de guardar",
+                                        confirmButtonText: "OK",
+                                    },
+                                    function () {
+                                        location.href =
+                                            "/insumos/public/compras_contador";
+                                    }
+                                );
+                            }
+                        })
+                        .fail(function (res) {
+                            console.log(res);
+                            swal(
+                                {
+                                    type: "error",
+                                    title: "Error",
+                                    text: "Ha ocurrido un error al momento de guardar",
+                                    confirmButtonText: "OK",
+                                },
+                                function () {
+                                    location.href =
+                                        "/insumos/public/compras_contador";
+                                }
+                            );
+                        });
+                }
+            );
+        } else {
+            showNotification(
+                "bg-red",
+                "Debe selecionar una opción antes de guardar",
+                "bottom",
+                "right",
+                "",
+                ""
+            );
         }
-    );
-
+    }
 };
 
 const guardarRechazoContador = () => {
     let uid = $("#txtIdCompraDetail").val();
-    let mmotivo_rechazo = $('#txtMotivoRechazo').val();
+    let mmotivo_rechazo = $("#txtMotivoRechazo").val();
 
     let datos = {
         id: uid,
         estatus: "Rechazado Contador",
-        motivo_rechazo:mmotivo_rechazo,
+        motivo_rechazo: mmotivo_rechazo,
         _token: $('input[name="_token"]').val(),
     };
     swal(
@@ -1018,7 +1128,8 @@ const guardarRechazoContador = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras_contador";
+                                location.href =
+                                    "/insumos/public/compras_contador";
                             }
                         );
                     } else {
@@ -1030,7 +1141,8 @@ const guardarRechazoContador = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras_contador";
+                                location.href =
+                                    "/insumos/public/compras_contador";
                             }
                         );
                     }
@@ -1050,5 +1162,37 @@ const guardarRechazoContador = () => {
                 });
         }
     );
+};
 
+const MostrarProductoAceptar = () => {
+    let nombre = $("#txtInsumosCompraDetail").val();
+    let linkop1 = $("#txtLinkInsumo1Detail").val();
+    let linkop2 = $("#txtLinkInsumo2Detail").val();
+    let precioop1 = $("#txtPrecioInsumo1Detail").val();
+    let precioop2 = $("#txtPrecioInsumo2Detail").val();
+    let uid = $("#txtIdCompraDetail").val();
+    let total_p = $("#txtCantidadProductosDetail").val();
+
+    $("#txtIdCompraInsumoAceptar").val(uid);
+    $("#txtprecioOpc2").val(precioop2);
+    $("#txtprecioOpc1").val(precioop1);
+    $("#txtLinkOpc2").val(linkop2);
+    $("#txtLinkOpc1").val(linkop1);
+    $("#txttxtInsumosSolicitado").val(nombre);
+    $("#txtTotalProductos").val(total_p);
+
+    $("#dlgAcepacionInsumo").modal("show");
+    $("#dlgComprasDetail").modal("toggle");
+};
+
+const limpiarCamposAceptacion = () => {
+    $("#txtIdCompraInsumoAceptar").val("");
+    $("#txtprecioOpc2").val("");
+    $("#txtprecioOpc1").val("");
+    $("#txtLinkOpc2").val("");
+    $("#txtLinkOpc1").val("");
+    $("#txttxtInsumosSolicitado").val("");
+
+    document.getElementById("checkOpcion2").checked = false;
+    document.getElementById("checkOpcion1").checked = false;
 };

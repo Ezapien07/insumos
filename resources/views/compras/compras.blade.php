@@ -109,8 +109,7 @@ use Illuminate\Support\Facades\Auth;
                                 @case('Almacen')
                                 @if($compra->estatus == 'Pendiente Directivo')
                                 <button class="btn btn-warning waves-effect btn-circle waves-light" type="button" onclick="detalleCompras(<?= $compra->id_compra ?>)">
-                                    <i class="fa fa-edit"></i></button>
-
+                                    <i class="fa fa-edit"></i> &nbsp;&nbsp;&nbsp;&nbsp;</button>
                                 <button class="btn btn-danger waves-effect btn-circle waves-light" type="button" onclick="eliminarCompra(<?= $compra->id_compra ?>)">
                                     <i class="fa fa-trash"></i></button>
                                 @else
@@ -405,7 +404,7 @@ use Illuminate\Support\Facades\Auth;
                     @case('Contador')
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarComprasDetail()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cancelar</button>
                     <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal" onclick="mostrarModalRechazo()"> <i class="fa fa-times-circle" aria-hidden="true"></i> &nbsp; Rechazar</button>
-                    <button type="button" id="btnAutorizarContador" class="btn btn-success waves-effect" onclick="aceptarCompraContador()"> <i class="fas fa-check-circle" aria-hidden="true"></i> &nbsp; Autorizar</button>
+                    <button type="button" id="btnAutorizarContador" class="btn btn-success waves-effect" onclick=" MostrarProductoAceptar()"> <i class="fas fa-check-circle" aria-hidden="true"></i> &nbsp; Autorizar</button>
                     @break
                     @case('Gerente')
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarComprasDetail()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cancelar</button>
@@ -561,20 +560,20 @@ use Illuminate\Support\Facades\Auth;
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="limpiarCamposRechazo()">×</button>
             </div>
             <div class="modal-body">
-            <form action="" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="txtMotivoRechazo">Motivo del Rechazo</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <i class="far fa-list-alt"></i>
-                            </span>
+                <form action="" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="txtMotivoRechazo">Motivo del Rechazo</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="far fa-list-alt"></i>
+                                </span>
+                            </div>
+                            <textarea type="text" class="form-control" name="txtMotivoRechazo" id="txtMotivoRechazo" placeholder="Motivo del Rechazo"></textarea>
                         </div>
-                        <textarea type="text" class="form-control" name="txtMotivoRechazo" id="txtMotivoRechazo"  placeholder="Motivo del Rechazo"></textarea>
                     </div>
-                </div>
-                <input type="hidden" id="txtIdCompraRechazo" class="form-control" placeholder="Id">
+                    <input type="hidden" id="txtIdCompraRechazo" class="form-control" placeholder="Id">
             </div>
             </form>
             <div class="modal-footer">
@@ -595,25 +594,125 @@ use Illuminate\Support\Facades\Auth;
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="limpiarCamposRechazo()">×</button>
             </div>
             <div class="modal-body">
-            <form action="" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="txtMotivoRechazoDirectivo">Motivo del Rechazo</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <i class="far fa-list-alt"></i>
-                            </span>
+                <form action="" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="txtMotivoRechazoDirectivo">Motivo del Rechazo</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="far fa-list-alt"></i>
+                                </span>
+                            </div>
+                            <textarea type="text" class="form-control" name="txtMotivoRechazoDirectivo" id="txtMotivoRechazoDirectivo" placeholder="Motivo del Rechazo"></textarea>
                         </div>
-                        <textarea type="text" class="form-control" name="txtMotivoRechazoDirectivo" id="txtMotivoRechazoDirectivo"  placeholder="Motivo del Rechazo"></textarea>
                     </div>
-                </div>
-                <input type="hidden" id="txtIdCompraRechazoDirectivo" class="form-control" placeholder="Id">
+                    <input type="hidden" id="txtIdCompraRechazoDirectivo" class="form-control" placeholder="Id">
             </div>
             </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarCamposComprasRechazoDirectivo()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp;Cancelar</button>
                 <button type="button" class="btn btn-success waves-effect" onclick="guardarRechazoDirectivo()"> <i class="fa fa-save" aria-hidden="true"></i> &nbsp;Guardar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="dlgAcepacionInsumo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">Formulario de Aceptación de Producto</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="limpiarCamposAceptacion()">×</button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="txtInsumosSolicitado">Insumo Solicitado</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="far fa-list-alt"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="txtInsumosSolicitado" id="txtInsumosSolicitado" placeholder="Insumo Solicitado"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="card-header"> Opción 1</h4>
+                            <div class="form-group">
+                                <label for="txtLinkOpc1">Link opción 1</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-list-alt"></i>
+                                        </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" name="txtLinkOpc1" id="txtLinkOpc1" placeholder="Link del insumo 1"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtprecioOpc1">Precio Producto 1</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-list-alt"></i>
+                                        </span>
+                                    </div>
+                                    <input type="number" class="form-control" name="txtprecioOpc1" id="txtprecioOpc1" placeholder="Precio del insumo 1"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <div class="checkbox checkbox-success">
+                                    <input id="checkOpcion1" name="checkOpcion1" type="checkbox">
+                                    <label for="checkOpcion1"> Aceptar opción 1 </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="card-header"> Opción 2</h4>
+                            <div class="form-group">
+                                <label for="txtLinkOpc2">Link opción 2</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-list-alt"></i>
+                                        </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" name="txtLinkOpc2" id="txtLinkOpc2" placeholder="Link del insumo 2"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtprecioOpc2">Precio Producto 2</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-list-alt"></i>
+                                        </span>
+                                    </div>
+                                    <input type="number" class="form-control" name="txtprecioOpc2" id="txtprecioOpc2" placeholder="Precio del insumo 2"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <div class="checkbox checkbox-success">
+                                    <input id="checkOpcion2" name="checkOpcion2" type="checkbox">
+                                    <label for="checkOpcion2"> Aceptar opción 2 </label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="txtIdCompraInsumoAceptar" class="form-control" placeholder="Id">
+                        <input type="hidden" id="txtTotalProductos" class="form-control" placeholder="Id">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarCamposAceptacion()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp;Cancelar</button>
+                <button type="button" class="btn btn-success waves-effect" onclick="aceptarCompraContador()"> <i class="fa fa-save" aria-hidden="true"></i> &nbsp;Guardar</button>
             </div>
         </div>
         <!-- /.modal-content -->

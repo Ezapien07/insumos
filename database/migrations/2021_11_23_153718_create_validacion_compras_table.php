@@ -21,6 +21,9 @@ class CreateValidacionComprasTable extends Migration
             $table->string('datos_autoriza')->nullable();
             $table->string("fechas_autoriza")->nullable();
             $table->string("motivo_rechazo")->nullable();
+            $table->string("producto_comprar")->nullable();
+            $table->integer("precio_producto")->nullable();
+            $table->integer("total_pagar")->nullable();
             $table->date('fecha_registro')->nullable()->default(date('Y-m-d'));
             $table->foreignId('id_compra')->references('id')->on('compras');
             $table->timestamps();

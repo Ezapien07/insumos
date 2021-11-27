@@ -135,13 +135,16 @@ class ComprasControlador extends Controller
                 $mValidacionCompra->estatus = 3;
                 $mValidacionCompra->datos_autoriza .= '     Contador: Autorizado';
                 $mValidacionCompra->fechas_autoriza .= "   ".date('Y/m/d');
-                $mValidacionCompra->id_directivo = Auth::user()->id;
+                $mValidacionCompra->producto_comprar = $request->producto_comprar;
+                $mValidacionCompra->precio_producto = (int) $request->precio_producto;
+                $mValidacionCompra->total_pagar = (int)$request->precio_producto * (int)$request->cantidad;
+                $mValidacionCompra->id_contador = Auth::user()->id;
             } else {
                 $mValidacionCompra->estatus = 4;
                 $mValidacionCompra->datos_autoriza .= '  Contador: Rechazado';
                 $mValidacionCompra->fechas_autoriza .= "   ".date('Y/m/d');
                 $mValidacionCompra->motivo_rechazo = $request->motivo_rechazo;
-                $mValidacionCompra->id_directivo = Auth::user()->id;
+                $mValidacionCompra->id_contador = Auth::user()->id;
                 $mCompras = Compras::find($request->id);
                 $mCompras->estatus = 2;
                 $mCompras->save();
