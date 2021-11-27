@@ -161,7 +161,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
 
-                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" OR \Auth::user()->rol== "Contador" OR \Auth::user()->rol== "Almacen")
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Almacen")
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/compras')}}">Compras activas</a></li>
@@ -169,6 +169,22 @@
                             </ul>
                         </li>
                         @else
+                        @if(\Auth::user()->rol== "Gerente")
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{URL::to('/compras_directivo')}}">Compras activas</a></li>
+                            </ul>
+                        </li>
+                        @else
+                        @if(\Auth::user()->rol== "Contador")
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{URL::to('/compras_contador')}}">Compras activas</a></li>
+                            </ul>
+                        </li>
+                        @else
+                        @endif
+                        @endif
                         @endif
 
                         @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")

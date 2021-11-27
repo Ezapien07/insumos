@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
         <h2 class="card-title">Ctrl. de Compras</h2>
         <p class="card-text"> ¡Hola Jessi! En esta pantalla podrás gestionar las compras de insumos que nesesites. </p>
         <hr>
-        <?= $compras ?>
         <div class="table-responsive m-t-40">
             <table id="tbCompras" class="table table-striped table-bordered table-condensed table-hover text-left" cellspacing="0" width="100%">
                 <thead>
@@ -21,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
                         <th>Insumo</th>
                         <th>Cantidad Solicitada</th>
                         <th>Opciones de Compra</th>
+                        <th>Datos de Autorización / Rechazo</th>
                         <th>Estatus</th>
                         <th class="text-center">Acciones</th>
                     </tr>
@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Auth;
                         <th>Insumo</th>
                         <th>Cantidad Solicitada</th>
                         <th>Opciones de Compra</th>
+                        <th>Datos de Autorización</th>
                         <th>Estatus</th>
                         <th class="text-center">Acciones</th>
                     </tr>
@@ -56,12 +57,36 @@ use Illuminate\Support\Facades\Auth;
                             <b>Total : </b>$ {{$compra->precio_op2 * $compra->cantidad_solicitada}}<br>
                         </td>
                         <td>
+                            {{$compra->datos_autoriza}}<br>
+                            @if($compra->estatus == 'Rechazado')
+                            <h4 class="card-title text-center">Motivo Rechazo</h4>
+                            <br>
+                            {{$compra->motivo_rechazo}}
+                            @else
+                            @endif
+                        </td>
+                        <td>
                             @switch($compra->estatus)
                             @case('Pendiente Directivo')
                             <i class="fas fa-user-circle" aria-hidden="true"></i> {{$compra->estatus}}
                             @break
                             @case('Pendiente Contador')
                             <i class="fas fa-hand-holding-usd" aria-hidden="true"></i> {{$compra->estatus}}
+                            @break
+                            @case('Pendiente Contador')
+                            <i class="fas fa-hand-holding-usd" aria-hidden="true"></i> {{$compra->estatus}}
+                            @break
+                            @case('Autorizado')
+                            <i class="fa fa-check-circle" aria-hidden="true"></i> {{$compra->estatus}}
+                            @break
+                            @case('Rechazad0')
+                            <i class="fa fa-times-circle" aria-hidden="true"></i> {{$compra->estatus}}
+                            @break
+                            @case('Solicitado')
+                            <i class="fas fa-cart-plus" aria-hidden="true"></i> {{$compra->estatus}}
+                            @break
+                            @case('Recibido')
+                            <i class="fas fa-people-carry" aria-hidden="true"></i> {{$compra->estatus}}
                             @break
                             @endswitch
                         </td>
@@ -89,7 +114,7 @@ use Illuminate\Support\Facades\Auth;
                                 <button class="btn btn-danger waves-effect btn-circle waves-light" type="button" onclick="eliminarCompra(<?= $compra->id_compra ?>)">
                                     <i class="fa fa-trash"></i></button>
                                 @else
-                                <button class="btn btn-warning waves-effect btn-circle waves-light" type="button" onclick="detalleComprasView(<?= $compra->id_compra ?>)">
+                                <button class="btn btn-warning waves-effect btn-circle waves-light" type="button" onclick="detalleComprasViewAlmacen(<?= $compra->id_compra ?>)">
                                     <i class="fa fa-eye"></i></button>
                                 @endif
                                 @break
@@ -253,7 +278,7 @@ use Illuminate\Support\Facades\Auth;
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="vcenter">Formulario para la compra de Insumos</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="limpiarCompras()">×</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="limpiarComprasDetail()">×</button>
             </div>
             <div class="modal-body">
                 <form action="" method="POST">
@@ -376,16 +401,16 @@ use Illuminate\Support\Facades\Auth;
                     @case('Almacen')
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarComprasDetail()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cancelar</button>
                     <button type="button" class="btn btn-success waves-effect" onclick="modificarCompra()"> <i class="fa fa-save" aria-hidden="true"></i> &nbsp; Guardar</button>
-                    <button type="button" id="btnSuministrar" class="btn btn-success waves-effect" onclick="decideCompras()"> <i class="fas fa-cart-arr" aria-hidden="true"></i> &nbsp; Solicitar Compra</button>
-                    <button type="button" id="btnRecepcion" class="btn btn-success waves-effect" onclick="ready()"> <i class="fas fa-people-carry" aria-hidden="true"></i> &nbsp; Registrar Recepción</button>
                     @break
                     @case('Contador')
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarComprasDetail()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cancelar</button>
-                    <button type="button" id="btnAutorizarContador" class="btn btn-success waves-effect" onclick="ready()"> <i class="fas fa-check-circle" aria-hidden="true"></i> &nbsp; Autorizar</button>
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal" onclick="mostrarModalRechazo()"> <i class="fa fa-times-circle" aria-hidden="true"></i> &nbsp; Rechazar</button>
+                    <button type="button" id="btnAutorizarContador" class="btn btn-success waves-effect" onclick="aceptarCompraContador()"> <i class="fas fa-check-circle" aria-hidden="true"></i> &nbsp; Autorizar</button>
                     @break
                     @case('Gerente')
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarComprasDetail()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cancelar</button>
-                    <button type="button" id="btnAutorizarDirectivo" class="btn btn-success waves-effect" onclick="ready()"> <i class="fas fa-check-circle" aria-hidden="true"></i> &nbsp; Autorizar</button>
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal" onclick="mostrarModalRechazoDirectivo()"> <i class="fa fa-times-circle" aria-hidden="true"></i> &nbsp; Rechazar</button>
+                    <button type="button" id="btnAutorizarDirectivo" class="btn btn-success waves-effect" onclick="aceptarCompraDirectivo()"> <i class="fas fa-check-circle" aria-hidden="true"></i> &nbsp; Autorizar</button>
                     @break
                     @endswitch
                 </div>
@@ -394,5 +419,205 @@ use Illuminate\Support\Facades\Auth;
         </div>
         <!-- /.modal-dialog -->
     </div>
+</div>
+
+<div id="dlgComprasDetailAlmacen" class="modal fade bs-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">Formulario para la compra de Insumos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="limpiarComprasDetailAlmacen()">×</button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST">
+                    @csrf
+                    <div class="row">
+                        <h3 class="card-header col-md-12 text-center">Datos de la compra</h3>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtClaveCompraDetailAlmacen">Clave de Compra</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fas fa-barcode"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="txtClaveCompraDetailAlmacen" id="txtClaveCompraDetailAlmacen" placeholder="Clave de la compra" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtFechaCompraDetailAlmacen">Fecha de compra</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="txtFechaCompraDetailAlmacen" id="txtFechaCompraDetailAlmacen" placeholder="Fecha de la compra en la que se registra" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtInsumosCompraDetailAlmacen">Insumo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend col-12">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fas fa-cube" aria-hidden="true"></i>
+                                        </span>
+                                        <input type="text" class="form-control" name="txtInsumosCompraDetailAlmacen" id="txtInsumosCompraDetailAlmacen" placeholder="Insumo a comprar">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtCantidadProductosDetailAlmacen">Cantidad de Productos a comprar</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fas fa-boxes" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <input type="number" min='3' class="form-control" name="txtCantidadProductosDetailAlmacen" id="txtCantidadProductosDetailAlmacen" placeholder="Cantidad de Insumos">
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="card-header col-md-12 text-center">Datos del Insumo</h3>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtLinkInsumo1DetailAlmacen">Link del producto Tienda 1</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fas fa-link" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <textarea type="text" min='3' class="form-control" name="txtLinkInsumo1DetailAlmacen" id="txtLinkInsumo1DetailAlmacen" placeholder="Link de la paguina del producto"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtPrecioInsumo1Almacen">Precio del producto Tienda 1</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-money-bill-alt" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <input type="number" min='3' class="form-control" name="txtPrecioInsumo1DetailAlmacen" id="txtPrecioInsumo1DetailAlmacen" placeholder="precio del Insumo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtLinkInsumo2DetailAlmacen">Link del producto Tienda 2</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fas fa-link" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <textarea type="text" min='3' class="form-control" name="txtLinkInsumo2DetailAlmacen" id="txtLinkInsumo2DetailAlmacen" placeholder="Link de la paguina del producto"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtPrecioInsumo2DetailAlmacen">Precio del producto Tienda 2</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-money-bill-alt" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <input type="number" min='3' class="form-control" name="txtPrecioInsumo2DetailAlmacen" id="txtPrecioInsumo2DetailAlmacen" placeholder="precio del Insumo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="txtIdCompraDetailAlmacen" class="form-control" placeholder="Id">
+
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarComprasDetailAlmacen()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cancelar</button>
+                    <button type="button" id="btnSuministrar" class="btn btn-success waves-effect" onclick="suministrar()"> <i class="fas fa-cart-plus" aria-hidden="true"></i> &nbsp; Solicitar Compra</button>
+                    <button type="button" id="btnRecepcion" class="btn btn-success waves-effect" onclick="recibir()"> <i class="fas fa-people-carry" aria-hidden="true"></i> &nbsp; Registrar Recepción</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+<div id="dlgRechazoContador" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">Formulario de Rechazo de Compra de Insumos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="limpiarCamposRechazo()">×</button>
+            </div>
+            <div class="modal-body">
+            <form action="" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="txtMotivoRechazo">Motivo del Rechazo</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="far fa-list-alt"></i>
+                            </span>
+                        </div>
+                        <textarea type="text" class="form-control" name="txtMotivoRechazo" id="txtMotivoRechazo"  placeholder="Motivo del Rechazo"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" id="txtIdCompraRechazo" class="form-control" placeholder="Id">
+            </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarCamposComprasRechazo()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp;Cancelar</button>
+                <button type="button" class="btn btn-success waves-effect" onclick="guardarRechazoContador()"> <i class="fa fa-save" aria-hidden="true"></i> &nbsp; Guardar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="dlgRechazoDirectivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">Formulario de Rechazo de Compra de Insumos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="limpiarCamposRechazo()">×</button>
+            </div>
+            <div class="modal-body">
+            <form action="" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="txtMotivoRechazoDirectivo">Motivo del Rechazo</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="far fa-list-alt"></i>
+                            </span>
+                        </div>
+                        <textarea type="text" class="form-control" name="txtMotivoRechazoDirectivo" id="txtMotivoRechazoDirectivo"  placeholder="Motivo del Rechazo"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" id="txtIdCompraRechazoDirectivo" class="form-control" placeholder="Id">
+            </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="limpiarCamposComprasRechazoDirectivo()"> <i class="fa fa-times" aria-hidden="true"></i> &nbsp;Cancelar</button>
+                <button type="button" class="btn btn-success waves-effect" onclick="guardarRechazoDirectivo()"> <i class="fa fa-save" aria-hidden="true"></i> &nbsp;Guardar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
 @endsection

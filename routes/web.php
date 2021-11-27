@@ -27,6 +27,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/insumos', 'InsumosControlador@consultar')->name('insumos');
     Route::get('/compras', 'ComprasControlador@Consultar')->name('compras');
     Route::get('/compras_inactivas', 'ComprasControlador@ConsultarInactivos')->name('compras');
+    Route::get('/compras_contador', 'ComprasControlador@ConsultarContador')->name('compras');
+    Route::get('/compras_directivo', 'ComprasControlador@ConsultarDirectivo')->name('compras');
 });
 
 Route::group(['prefix' => 'insumos/acciones'], function () {

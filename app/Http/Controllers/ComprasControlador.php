@@ -17,6 +17,24 @@ class ComprasControlador extends Controller
         $compras = Compras::join('validacion_compras', 'compras.id', '=', 'validacion_compras.id_compra')->where('compras.estatus', '=', 'Activo')->get();
         return view('compras.compras', compact('insumos', 'compras'));
     }
+    public function ConsultarContador()
+    {
+        $insumos = Insumos::all()->where("estatus", "=", "Activo");
+        $compras = Compras::join('validacion_compras', 'compras.id', '=', 'validacion_compras.id_compra')
+            ->where('compras.estatus', '=', 'Activo')
+            ->where('validacion_compras.estatus', '=', 'Pendiente Contador')
+            ->get();
+        return view('compras.compras', compact('insumos', 'compras'));
+    }
+    public function ConsultarDirectivo()
+    {
+        $insumos = Insumos::all()->where("estatus", "=", "Activo");
+        $compras = Compras::join('validacion_compras', 'compras.id', '=', 'validacion_compras.id_compra')
+        ->where('compras.estatus', '=', 'Activo')
+        ->where('validacion_compras.estatus', '=', 'Pendiente Directivo')
+        ->get();
+        return view('compras.compras', compact('insumos', 'compras'));
+    }
     public function ConsultarInactivos()
     {
         $compras = Compras::join('validacion_compras', 'compras.id', '=', 'validacion_compras.id_compra')->where('compras.estatus', '=', 'Inactivo')->get();
@@ -46,7 +64,9 @@ class ComprasControlador extends Controller
     public function Buscar(Request $request)
     {
         try {
-            $compras = Compras::join('validacion_compras', 'compras.id', '=', 'validacion_compras.id_compra')->where('compras.id', '=', $request->id)->get();
+            $compras = Compras::join('validacion_compras', 'compras.id', '=', 'validacion_compras.id_compra')
+            ->where('compras.id', '=', $request->id)
+            ->get();
             return $compras;
         } catch (Exception $err) {
             return $err;
@@ -84,7 +104,7 @@ class ComprasControlador extends Controller
     public function EstatusDirectivo(Request $request)
     {
         try {
-            $mValidacionCompra = ValidacionCompras::where('id_compra', '=', $request->id)->get();
+            $mValidacionCompra = ValidacionCompras::where('id_compra', '=', $request->id)->get()->first();;
             if ($request->estatus == "Aceptado Directivo") {
                 $mValidacionCompra->estatus = 'Pendiente Contador';
                 $mValidacionCompra->datos_autoriza .= 'Directivo: Autorizado';
@@ -92,6 +112,8 @@ class ComprasControlador extends Controller
                 $mValidacionCompra->id_directivo = Auth::user()->id;
             } else {
                 $mValidacionCompra->estatus = 'Rechazado';
+                $mValidacionCompra->datos_autoriza .= 'Directivo: Rechazado';
+                $mValidacionCompra->fechas_autoriza .= date('Y/m/d');
                 $mValidacionCompra->motivo_rechazo = $request->motivo_rechazo;
                 $mValidacionCompra->id_directivo = Auth::user()->id;
                 $mCompras = Compras::find($request->id);
@@ -108,14 +130,16 @@ class ComprasControlador extends Controller
     public function EstatusContador(Request $request)
     {
         try {
-            $mValidacionCompra = ValidacionCompras::where('id_compra', '=', $request->id)->get();
+            $mValidacionCompra = ValidacionCompras::where('id_compra', '=', $request->id)->get()->first();;
             if ($request->estatus == "Aceptado Contador") {
-                $mValidacionCompra->estatus = 'Autorizado';
+                $mValidacionCompra->estatus = 3;
                 $mValidacionCompra->datos_autoriza .= '\n Contador: Autorizado';
                 $mValidacionCompra->fechas_autoriza .= date('Y/m/d');
                 $mValidacionCompra->id_directivo = Auth::user()->id;
             } else {
-                $mValidacionCompra->estatus = 'Rechazado';
+                $mValidacionCompra->estatus = 4;
+                $mValidacionCompra->datos_autoriza .= '\n Contador: Rechazado';
+                $mValidacionCompra->fechas_autoriza .= date('Y/m/d');
                 $mValidacionCompra->motivo_rechazo = $request->motivo_rechazo;
                 $mValidacionCompra->id_directivo = Auth::user()->id;
                 $mCompras = Compras::find($request->id);
@@ -132,8 +156,8 @@ class ComprasControlador extends Controller
     public function EstatusCompraSolicitado(Request $request)
     {
         try {
-            $mComprasValidacion = ValidacionCompras::where('id_compra', '=', $request->id)->get();
-            $mComprasValidacion->estatus = 'Solicitado';
+            $mComprasValidacion = ValidacionCompras::where('id_compra', '=', $request->id)->get()->first();
+            $mComprasValidacion->estatus = 5;
             $mComprasValidacion->save();
             return 'OK';
         } catch (Exception $err) {
@@ -144,8 +168,8 @@ class ComprasControlador extends Controller
     public function EstatusCompraRecibido(Request $request)
     {
         try {
-            $mComprasValidacion = ValidacionCompras::where('id_compra', '=', $request->id)->get();
-            $mComprasValidacion->estatus = 'Recibido';
+            $mComprasValidacion = ValidacionCompras::where('id_compra', '=', $request->id)->get()->first();;
+            $mComprasValidacion->estatus = 6;
             $mCompras = Compras::find($request->id);
             $mCompras->estatus = 2;
             $mInsumos = Insumos::find($mCompras->id_insumo);
