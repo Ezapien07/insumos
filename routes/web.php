@@ -27,6 +27,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/insumos', 'InsumosControlador@consultar')->name('insumos');
     Route::get('/reporte_insumos', 'ReportesController@consultarReporteInsumos');
     Route::get('/consultarInsumos', 'ReportesController@consultarReporteInsumosG');
+    Route::get('/compras', 'ComprasControlador@Consultar')->name('compras');
+    Route::get('/compras_inactivas', 'ComprasControlador@ConsultarInactivos')->name('compras');
+    Route::get('/compras_contador', 'ComprasControlador@ConsultarContador')->name('compras');
+    Route::get('/compras_directivo', 'ComprasControlador@ConsultarDirectivo')->name('compras');
 });
 
 Route::group(['prefix' => 'insumos/acciones'], function () {
@@ -35,4 +39,15 @@ Route::group(['prefix' => 'insumos/acciones'], function () {
     Route::post('/modificar', 'InsumosControlador@Modificar');
     Route::post('/eliminar', 'InsumosControlador@Eliminar');
     Route::post('/activar', 'InsumosControlador@Activar');
+});
+
+Route::group(['prefix' => 'compras/acciones'], function () {
+    Route::post('/agregar', 'ComprasControlador@Agregar');
+    Route::post('/buscar', 'ComprasControlador@Buscar');
+    Route::post('/modificar', 'ComprasControlador@Modificar');
+    Route::post('/eliminar', 'ComprasControlador@Eliminar');
+    Route::post('/directivo', 'ComprasControlador@EstatusDirectivo');
+    Route::post('/contador', 'ComprasControlador@EstatusContador');
+    Route::post('/almacen_solicitar', 'ComprasControlador@EstatusCompraSolicitado');
+    Route::post('/almacen_recibido', 'ComprasControlador@EstatusCompraRecibido');
 });

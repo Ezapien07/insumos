@@ -61,7 +61,6 @@
                     @endforelse
                 </tbody>
             </table>
-            <button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10" data-toggle="modal" data-target="#dlginsumos"><i class="fa fa-plus text-white"></i></button>
         </div>
     </div>
 </div>

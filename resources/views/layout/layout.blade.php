@@ -15,10 +15,8 @@
     <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!--alerts CSS -->
     <link href="{{asset('assets/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
-
     <!-- Custom styles for this page -->
     <link href="{{asset('assets/plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- chartist CSS -->
     <link href="{{asset('assets/plugins/chartist-js/dist/chartist.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/plugins/chartist-js/dist/chartist-init.css')}}" rel="stylesheet">
@@ -29,9 +27,19 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="{{asset('css/colors/blue.css')}}" id="theme" rel="stylesheet">
+    <link href="{{asset('assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
 
     <!-- Link para selector-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -61,7 +69,7 @@
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
 
                             <!-- Light Logo icon -->
-                            <img src="{{asset('assets/images/logo-icon-3.png')}}" alt="homepage" class="light-logo"/>
+                            <img src="{{asset('assets/images/logo-icon-3.png')}}" alt="homepage" class="light-logo" />
                         </b>
                     </a>
                 </div>
@@ -126,7 +134,7 @@
                                         <div class="dw-user-box">
                                             <div class="u-text">
                                                 <h4>{{Auth::user()->name}}</h4>
-                                                <p class="text-muted"> 
+                                                <p class="text-muted">
                                                     <a href="#">{{Auth::user()->email}}</a>
                                                 </p>
                                             </div>
@@ -155,7 +163,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
 
-                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente"  OR \Auth::user()->rol== "Contador")
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Almacen")
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/liga')}}">Pantalla</a></li>
@@ -168,11 +176,42 @@
                         @endif
 
                         @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
+                                <li><a href="{{URL::to('/compras')}}">Compras activas</a></li>
+                                <li><a href="{{URL::to('/compras_inactivas')}}">Compras inactivas</a></li>
+                            </ul>
+                        </li>
+                        @else
+                        @if(\Auth::user()->rol== "Gerente")
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{URL::to('/compras_directivo')}}">Compras activas</a></li>
+                            </ul>
+                        </li>
+                        @else
+                        @if(\Auth::user()->rol== "Contador")
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{URL::to('/compras_contador')}}">Compras activas</a></li>
+                            </ul>
+                        </li>
+                        @else
+                        @endif
+                        @endif
+                        @endif
+
+                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                         <li class="nav-devider"></li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-laptop-mac"></i><span class="hide-menu">Insumos</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/insumos')}}">Insumos activos</a></li>
                                 <li><a href="{{URL::to('/insumos_inactivos')}}">Insumos inactivos</a></li>
+                                @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
+                                <li class="nav-devider"></li>
+                                <li><a href="{{URL::to('/reporte_inventario')}}">Reporte de inventario actual</a>
+                                </li>
+                                @else
+
+                                @endif
                             </ul>
                         </li>
                         @else
@@ -285,7 +324,7 @@
     <!-- This is data table -->
     <script src="{{asset('assets/plugins/datatables/dataTables.js')}}"></script>
     <!-- start - This is for export functionality only -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -308,27 +347,19 @@
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
         });
-
-        $('#tbCantidadInsumos').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        });
-
-        $('#tbTipoInsumos').DataTable({
+        $('#tbCompras').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
         });
     </script>
-
     <script src="{{asset('js_aplicacion/general.js')}}"></script>
     <script src="{{asset('js_aplicacion/insumos.js')}}"></script>
+    <script src="{{asset('js_aplicacion/compras.js')}}"></script>
     <!-- Archivos js de la aplicación 
     
-    <script src="{{asset('js_aplicacion/materiaPrima.js')}}"></script>
+    
     <script src="{{asset('js_aplicacion/cliente.js')}}"></script>
     <script src="{{asset('js_aplicacion/empleado.js')}}"></script>
     <script src="{{asset('js_aplicacion/producto.js')}}"></script>
@@ -344,6 +375,18 @@
     <!-- jspdf -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.js"></script>
+
+    <script src="{{asset('assets/plugins/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+    <script>
+        $(".select2").select2();
+        $('.my-select').selectpicker({
+            searchPlaceholder: "Insumo a comprar, buscar por clave o nombre",
+        });
+    </script>
 
 </body>
 

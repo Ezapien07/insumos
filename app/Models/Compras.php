@@ -16,17 +16,14 @@ class Compras extends Model
      * @var string[]
      */
     protected $fillable = [
-        'id',
-        'id_empleado',
+        'id_user',
+        'id_insumo',
         'insumo',
+        'clave',
         'link_op1',
         'precio_op1',
         'link_op2',
         'precio_op2',
-        'fecha_compra',
-        'id_admin',
-        'id_directivo',
-        'id_contador',
-        'estatus'
+        'fecha_compra'
     ];
 }
