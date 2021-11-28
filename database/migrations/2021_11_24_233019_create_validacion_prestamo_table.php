@@ -16,7 +16,7 @@ class CreateValidacionPrestamoTable extends Migration
         Schema::create('validacion_prestamo', function (Blueprint $table) {
             $table->id();
             $table->enum('estatus',['Autorizada','Rechazada']);
-            $table->string('cancelación')->default('');
+            $table->string('cancelacion')->default('');
             //id_user
             //id_prestamo
             $table->enum('rol',['Administrador','Almacen']);
