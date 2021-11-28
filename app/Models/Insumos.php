@@ -16,12 +16,11 @@ class Insumos extends Model
      * @var string[]
      */
     protected $fillable = [
-        'id',
         'nombre',
         'descripcion',
         'codigo',
-        'cantidad',
-        'estatus'
+        'estatus',
+        'cantidad_minima'
     ];
 
     /**

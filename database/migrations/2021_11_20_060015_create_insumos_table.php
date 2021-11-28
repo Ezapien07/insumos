@@ -21,6 +21,7 @@ class CreateInsumosTable extends Migration
             $table->integer('cantidad_minima');
             $table->enum('tipo_producto',['SI','NO']);
             $table->enum('estatus',['Activo','Inactivo']);
+            $table->enum('tipo_producto',['Consumible','No Consumible']);
             $table->timestamps();
         });
     }
