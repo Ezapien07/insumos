@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Validacion_prestamo extends Model
 {
     use HasFactory, HasFactory;
+    protected $table ='validacion_prestamo';
     /**
      * The attributes that are mass assignable.
      *

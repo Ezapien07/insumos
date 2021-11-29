@@ -26,20 +26,6 @@ class EmpleadoController extends Controller
     public function create(Request $request)
     {
         if (Auth::user()->rol == 'Administrador') {
-            /* nombre
-            apePaterno
-            apeMaterno
-            telefono
-            curp
-            rfc
-            correo
-            password
-            calle
-            num_casa
-            colonia
-            municipio
-            estado
-            codigo_postal */
             try {
                 $user = new User();
                 $user->name = $request->nombre;
@@ -65,6 +51,50 @@ class EmpleadoController extends Controller
                 $empleado->id_user = $user->id;
                 $empleado->save();
                 return response()->json(['usuario' => $user,"empleado"=>$empleado], 200);
+            } catch (Exception $error) {
+                return response()->$error;
+            }
+        } else {
+            return response()->json(['Error' => 'Solo el administrador puede tener acceso a los empleados'], 404);
+        }
+    }
+    public function edit(Request $request)
+    {
+        if (Auth::user()->rol == 'Administrador') {
+            try {
+                
+                $empleado =Empleados::find($request->id_user);
+                $empleado->nombre = $request->nombre;
+                $empleado->apePaterno = $request->apePaterno;
+                $empleado->apeMaterno = $request->apeMaterno;
+                $empleado->telefono = $request->telefono;
+                $empleado->curp = $request->curp;
+                $empleado->rfc = $request->rfc;
+                $empleado->correo = $request->correo;
+                $empleado->calle = $request->calle;
+                $empleado->num_casa = $request->num_casa;
+                $empleado->colonia = $request->colonia;
+                $empleado->municipio = $request->municipio;
+                $empleado->estado=$request->estado;
+                $empleado->codigo_postal = $request->codigo_postal;
+                $empleado->save();
+                return response()->json(['empleado' => $empleado,"empleado"=>$empleado], 200);
+            } catch (Exception $error) {
+                return response()->$error;
+            }
+        } else {
+            return response()->json(['Error' => 'Solo el administrador puede tener acceso a los empleados'], 404);
+        }
+    }
+    public function delete(Request $request)
+    {
+        if (Auth::user()->rol == 'Administrador') {
+            try {
+                
+                $empleado = Empleados::find($request->id_user);
+               $empleado->delete();
+                $empleado->save();
+                return response()->json(["msj"=>'Empleado eliminado'], 200);
             } catch (Exception $error) {
                 return response()->$error;
             }
