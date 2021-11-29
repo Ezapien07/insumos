@@ -3,19 +3,6 @@
 @section('contenido')
 
 <div class="card">
-    <style>
-        .btn-export-graph{
-            background-color: #000F9F;
-            color: white;
-            margin-right: 5px;
-            text-decoration: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.16), 0 2px 10px rgba(0,0,0,0.12);
-            border-radius: 2px;
-            border: none;
-            font-size: 13px;
-            line-height: 30px
-        }        
-    </style>
     <div class="card-body">
         <h2 class="card-title">Reporte de insumos</h2> 
         <p class="card-text"> ¡Hola {{Auth::user()->name}}! En esta pantalla podrás visualizar un reporte de los insumos con los que cuenta la organización.</p>
@@ -36,7 +23,7 @@
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th>Nombre del producto</th>
+                                <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Uds inventario actual</th>                  
                             </tr>
@@ -44,7 +31,7 @@
                         <tfoot>
                             <tr>
                                 <th>Código</th>
-                                <th>Nombre del producto</th>
+                                <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Uds inventario actual</th>    
                             </tr>

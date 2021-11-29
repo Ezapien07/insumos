@@ -32,8 +32,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 
-    <!-- Link para selector-->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -166,18 +164,11 @@
                         @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Almacen")
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{URL::to('/liga')}}">Pantalla</a></li>
-                                <li><a href="{{URL::to('/cliente')}}">Clientes activos</a></li>
-                                <li><a href="{{URL::to('/cliente_inactivos')}}">Clientes inactivos</a></li>
-                            </ul>
-                        </li>
-                        @else
-
-                        @endif
-
-                        @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente" )
                                 <li><a href="{{URL::to('/compras')}}">Compras activas</a></li>
                                 <li><a href="{{URL::to('/compras_inactivas')}}">Compras inactivas</a></li>
+                                <li class="nav-devider"></li>
+                                <li><a href="{{URL::to('/reporte_compras')}}">Reporte de compras general</a></li>
+                                <li><a href="{{URL::to('/reporte_compras_graficas')}}">Reporte de compras especìfico</a></li>
                             </ul>
                         </li>
                         @else
@@ -185,6 +176,8 @@
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/compras_directivo')}}">Compras activas</a></li>
+                                <li><a href="{{URL::to('/reporte_compras')}}">Reporte de compras general</a></li>
+                                <li><a href="{{URL::to('/reporte_compras_graficas')}}">Reporte de compras especìfico</a></li>
                             </ul>
                         </li>
                         @else
@@ -192,6 +185,9 @@
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Compras</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{URL::to('/compras_contador')}}">Compras activas</a></li>
+                                <li class="nav-devider"></li>
+                                <li><a href="{{URL::to('/reporte_compras')}}">Reporte de compras general</a></li>
+                                <li><a href="{{URL::to('/reporte_compras_graficas')}}">Reporte de compras especìfico</a></li>
                             </ul>
                         </li>
                         @else
@@ -207,7 +203,7 @@
                                 <li><a href="{{URL::to('/insumos_inactivos')}}">Insumos inactivos</a></li>
                                 @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                                 <li class="nav-devider"></li>
-                                <li><a href="{{URL::to('/reporte_inventario')}}">Reporte de inventario actual</a>
+                                <li><a href="{{URL::to('/reporte_insumos')}}">Reporte de insumos</a>
                                 </li>
                                 @else
 
@@ -220,9 +216,9 @@
 
                         @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                         <li class="nav-devider"></li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table-column-width"></i><span class="hide-menu">Reportes</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table-column-width"></i><span class="hide-menu">Prestamos</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{URL::to('/reporte_insumos')}}">Reporte de insumos</a></li>
+                                <li><a href="{{URL::to('/liga')}}">Pantalla</a></li>
                             </ul>
                         </li>
                         @else
@@ -350,6 +346,42 @@
         $('#tbCompras').DataTable({
             dom: 'Bfrtip',
             buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        });
+        $('#tbTipoInsumos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        $('#tbCantidadInsumos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        $('#tbReporteCompras').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print'
+            ]
+        });
+        $('#tbOrdenesCompraInsumos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        $('#tbCantidadSolicitadaInsumos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        $('#tbTotalInsumos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
         });
@@ -357,21 +389,7 @@
     <script src="{{asset('js_aplicacion/general.js')}}"></script>
     <script src="{{asset('js_aplicacion/insumos.js')}}"></script>
     <script src="{{asset('js_aplicacion/compras.js')}}"></script>
-    <!-- Archivos js de la aplicación 
-    
-    
-    <script src="{{asset('js_aplicacion/cliente.js')}}"></script>
-    <script src="{{asset('js_aplicacion/empleado.js')}}"></script>
-    <script src="{{asset('js_aplicacion/producto.js')}}"></script>
-    <script src="{{asset('js_aplicacion/materiaPrima.js')}}"></script>
-    <script src="{{asset('js_aplicacion/ventas.js')}}"></script>
-    <script src="{{asset('js_aplicacion/ordenCompra.js')}}"></script>
-    <script src="{{asset('js_aplicacion/pedidoEspecial.js')}}"></script>
-    <script src="{{asset('js_aplicacion/proveedor.js')}}"></script>
-    <script src="{{asset('js_aplicacion/reportepedidoEspecial.js')}}"></script>-->
 
-
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- jspdf -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.js"></script>
@@ -379,8 +397,6 @@
     <script src="{{asset('assets/plugins/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
     <script>
         $(".select2").select2();
         $('.my-select').selectpicker({

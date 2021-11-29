@@ -26,7 +26,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/insumos_inactivos', 'InsumosControlador@Consultar_Inactivos')->name('insumos');
     Route::get('/insumos', 'InsumosControlador@consultar')->name('insumos');
     Route::get('/reporte_insumos', 'ReportesController@consultarReporteInsumos');
+    Route::get('/reporte_compras', 'ReportesController@consultarReporteCompras');
+    Route::get('/reporte_compras_graficas', 'ReportesController@consultarReporteComprasG');
     Route::get('/consultarInsumos', 'ReportesController@consultarReporteInsumosG');
+    Route::get('/consultarComprasG', 'ReportesController@consultarReporteComprasGrafica');
     Route::get('/compras', 'ComprasControlador@Consultar')->name('compras');
     Route::get('/compras_inactivas', 'ComprasControlador@ConsultarInactivos')->name('compras');
     Route::get('/compras_contador', 'ComprasControlador@ConsultarContador')->name('compras');
