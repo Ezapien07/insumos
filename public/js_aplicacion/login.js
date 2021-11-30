@@ -10,7 +10,7 @@ function login() {
             _token: $('input[name="_token"]').val()
         }
         $.ajax({
-            url: "/insumos/public/login",
+            url: "/login",
             method: "POST",
             data: data
         }).done(function (res) {
@@ -19,7 +19,7 @@ function login() {
                     showNotification("bg-red", "El usuario y/o la contraseña son incorrectos.", "bottom", "right", "", "");
                     break;
                 case "4":
-                    location.href = "/insumos/public/pagina_principal";
+                    location.href = "/pagina_principal";
                     break;
             }
         }).fail(function (res) {

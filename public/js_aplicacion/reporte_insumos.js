@@ -248,7 +248,7 @@ const inicializarGraficaInsumosTiposBarra = (data)  => {
 
 const consultarInsumosCantidad = async () => {
     $.ajax({
-        url: "/insumos/public/consultarInsumos",
+        url: "/consultarInsumos",
         method: "GET",
         data: "",
     })
@@ -268,7 +268,7 @@ const consultarInsumosCantidad = async () => {
                     confirmButtonText: "OK",
                 },
                 function () {
-                    location.href = "/insumos/public/insumos";
+                    location.href = "/insumos";
                 }
             );
         });

@@ -97,7 +97,7 @@ const modificarCompra = () => {
             },
             function () {
                 $.ajax({
-                    url: "/insumos/public/compras/acciones/modificar",
+                    url: "/compras/acciones/modificar",
                     method: "POST",
                     data: datos,
                 })
@@ -112,7 +112,7 @@ const modificarCompra = () => {
                                     confirmButtonText: "OK",
                                 },
                                 function () {
-                                    location.href = "/insumos/public/compras";
+                                    location.href = "/compras";
                                 }
                             );
                         } else {
@@ -124,7 +124,7 @@ const modificarCompra = () => {
                                     confirmButtonText: "OK",
                                 },
                                 function () {
-                                    location.href = "/insumos/public/compras";
+                                    location.href = "/compras";
                                 }
                             );
                         }
@@ -138,7 +138,7 @@ const modificarCompra = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras";
+                                location.href = "/compras";
                             }
                         );
                     });
@@ -156,7 +156,7 @@ const detalleCompras = (uid) => {
     };
 
     $.ajax({
-        url: "/insumos/public/compras/acciones/buscar",
+        url: "/compras/acciones/buscar",
         method: "POST",
         data: datos,
     })
@@ -193,7 +193,7 @@ const detalleCompras = (uid) => {
                         confirmButtonText: "OK",
                     },
                     function () {
-                        location.href = "/insumos/public/insumos";
+                        location.href = "/insumos";
                     }
                 );
             }
@@ -207,7 +207,7 @@ const detalleCompras = (uid) => {
                     confirmButtonText: "OK",
                 },
                 function () {
-                    location.href = "/insumos/public/insumos";
+                    location.href = "/insumos";
                 }
             );
         });
@@ -220,7 +220,7 @@ const detalleComprasView = (uid) => {
     };
 
     $.ajax({
-        url: "/insumos/public/compras/acciones/buscar",
+        url: "/compras/acciones/buscar",
         method: "POST",
         data: datos,
     })
@@ -262,7 +262,7 @@ const detalleComprasView = (uid) => {
                         confirmButtonText: "OK",
                     },
                     function () {
-                        location.href = "/insumos/public/insumos";
+                        location.href = "/insumos";
                     }
                 );
             }
@@ -276,7 +276,7 @@ const detalleComprasView = (uid) => {
                     confirmButtonText: "OK",
                 },
                 function () {
-                    location.href = "/insumos/public/insumos";
+                    location.href = "/insumos";
                 }
             );
         });
@@ -288,7 +288,7 @@ const detalleComprasViewAlmacen = (uid) => {
     };
 
     $.ajax({
-        url: "/insumos/public/compras/acciones/buscar",
+        url: "/compras/acciones/buscar",
         method: "POST",
         data: datos,
     })
@@ -344,7 +344,7 @@ const detalleComprasViewAlmacen = (uid) => {
                         confirmButtonText: "OK",
                     },
                     function () {
-                        location.href = "/insumos/public/insumos";
+                        location.href = "/insumos";
                     }
                 );
             }
@@ -358,7 +358,7 @@ const detalleComprasViewAlmacen = (uid) => {
                     confirmButtonText: "OK",
                 },
                 function () {
-                    location.href = "/insumos/public/insumos";
+                    location.href = "/insumos";
                 }
             );
         });
@@ -406,7 +406,7 @@ const insertarCompra = () => {
             },
             function () {
                 $.ajax({
-                    url: "/insumos/public/compras/acciones/agregar",
+                    url: "/compras/acciones/agregar",
                     method: "POST",
                     data: datos,
                 })
@@ -421,7 +421,7 @@ const insertarCompra = () => {
                                     confirmButtonText: "OK",
                                 },
                                 function () {
-                                    location.href = "/insumos/public/compras";
+                                    location.href = "/compras";
                                 }
                             );
                         } else {
@@ -433,7 +433,7 @@ const insertarCompra = () => {
                                     confirmButtonText: "OK",
                                 },
                                 function () {
-                                    location.href = "/insumos/public/compras";
+                                    location.href = "/compras";
                                 }
                             );
                         }
@@ -447,7 +447,7 @@ const insertarCompra = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras";
+                                location.href = "/compras";
                             }
                         );
                     });
@@ -545,7 +545,7 @@ const eliminarCompra = (uid) => {
         },
         function () {
             $.ajax({
-                url: "/insumos/public/compras/acciones/eliminar",
+                url: "/compras/acciones/eliminar",
                 method: "POST",
                 data: datos,
             })
@@ -559,7 +559,7 @@ const eliminarCompra = (uid) => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras";
+                                location.href = "/compras";
                             }
                         );
                     } else {
@@ -571,7 +571,7 @@ const eliminarCompra = (uid) => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras";
+                                location.href = "/compras";
                             }
                         );
                     }
@@ -585,7 +585,7 @@ const eliminarCompra = (uid) => {
                             confirmButtonText: "OK",
                         },
                         function () {
-                            location.href = "/insumos/public/compras";
+                            location.href = "/compras";
                         }
                     );
                 });
@@ -639,7 +639,7 @@ const suministrar = () => {
         },
         function () {
             $.ajax({
-                url: "/insumos/public/compras/acciones/almacen_solicitar",
+                url: "/compras/acciones/almacen_solicitar",
                 method: "POST",
                 data: datos,
             })
@@ -655,7 +655,7 @@ const suministrar = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras";
+                                location.href = "/compras";
                             }
                         );
                     } else {
@@ -667,7 +667,7 @@ const suministrar = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras";
+                                location.href = "/compras";
                             }
                         );
                     }
@@ -681,7 +681,7 @@ const suministrar = () => {
                             confirmButtonText: "OK",
                         },
                         function () {
-                            location.href = "/insumos/public/compras";
+                            location.href = "/compras";
                         }
                     );
                 });
@@ -710,7 +710,7 @@ const recibir = () => {
         },
         function () {
             $.ajax({
-                url: "/insumos/public/compras/acciones/almacen_recibido",
+                url: "/compras/acciones/almacen_recibido",
                 method: "POST",
                 data: datos,
             })
@@ -725,7 +725,7 @@ const recibir = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras";
+                                location.href = "/compras";
                             }
                         );
                     } else {
@@ -737,7 +737,7 @@ const recibir = () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/compras";
+                                location.href = "/compras";
                             }
                         );
                     }
@@ -751,7 +751,7 @@ const recibir = () => {
                             confirmButtonText: "OK",
                         },
                         function () {
-                            location.href = "/insumos/public/compras";
+                            location.href = "/compras";
                         }
                     );
                 });
@@ -782,7 +782,7 @@ const aceptarCompraDirectivo = () => {
         },
         function () {
             $.ajax({
-                url: "/insumos/public/compras/acciones/directivo",
+                url: "/compras/acciones/directivo",
                 method: "POST",
                 data: datos,
             })
@@ -798,7 +798,7 @@ const aceptarCompraDirectivo = () => {
                             },
                             function () {
                                 location.href =
-                                    "/insumos/public/compras_directivo";
+                                    "/compras_directivo";
                             }
                         );
                     } else {
@@ -811,7 +811,7 @@ const aceptarCompraDirectivo = () => {
                             },
                             function () {
                                 location.href =
-                                    "/insumos/public/compras_directivo";
+                                    "/compras_directivo";
                             }
                         );
                     }
@@ -825,7 +825,7 @@ const aceptarCompraDirectivo = () => {
                             confirmButtonText: "OK",
                         },
                         function () {
-                            location.href = "/insumos/public/compras_directivo";
+                            location.href = "/compras_directivo";
                         }
                     );
                 });
@@ -857,7 +857,7 @@ const guardarRechazoDirectivo = () => {
         },
         function () {
             $.ajax({
-                url: "/insumos/public/compras/acciones/directivo",
+                url: "/compras/acciones/directivo",
                 method: "POST",
                 data: datos,
             })
@@ -873,7 +873,7 @@ const guardarRechazoDirectivo = () => {
                             },
                             function () {
                                 location.href =
-                                    "/insumos/public/compras_directivo";
+                                    "/compras_directivo";
                             }
                         );
                     } else {
@@ -886,7 +886,7 @@ const guardarRechazoDirectivo = () => {
                             },
                             function () {
                                 location.href =
-                                    "/insumos/public/compras_directivo";
+                                    "/compras_directivo";
                             }
                         );
                     }
@@ -900,7 +900,7 @@ const guardarRechazoDirectivo = () => {
                             confirmButtonText: "OK",
                         },
                         function () {
-                            location.href = "/insumos/public/compras_directivo";
+                            location.href = "/compras_directivo";
                         }
                     );
                 });
@@ -942,7 +942,7 @@ const aceptarCompraContador = () => {
             },
             function () {
                 $.ajax({
-                    url: "/insumos/public/compras/acciones/contador",
+                    url: "/compras/acciones/contador",
                     method: "POST",
                     data: datos,
                 })
@@ -959,7 +959,7 @@ const aceptarCompraContador = () => {
                                 },
                                 function () {
                                     location.href =
-                                        "/insumos/public/compras_contador";
+                                        "/compras_contador";
                                 }
                             );
                         } else {
@@ -972,7 +972,7 @@ const aceptarCompraContador = () => {
                                 },
                                 function () {
                                     location.href =
-                                        "/insumos/public/compras_contador";
+                                        "/compras_contador";
                                 }
                             );
                         }
@@ -988,7 +988,7 @@ const aceptarCompraContador = () => {
                             },
                             function () {
                                 location.href =
-                                    "/insumos/public/compras_contador";
+                                    "/compras_contador";
                             }
                         );
                     });
@@ -1024,7 +1024,7 @@ const aceptarCompraContador = () => {
                 },
                 function () {
                     $.ajax({
-                        url: "/insumos/public/compras/acciones/contador",
+                        url: "/compras/acciones/contador",
                         method: "POST",
                         data: datos,
                     })
@@ -1041,7 +1041,7 @@ const aceptarCompraContador = () => {
                                     },
                                     function () {
                                         location.href =
-                                            "/insumos/public/compras_contador";
+                                            "/compras_contador";
                                     }
                                 );
                             } else {
@@ -1054,7 +1054,7 @@ const aceptarCompraContador = () => {
                                     },
                                     function () {
                                         location.href =
-                                            "/insumos/public/compras_contador";
+                                            "/compras_contador";
                                     }
                                 );
                             }
@@ -1070,7 +1070,7 @@ const aceptarCompraContador = () => {
                                 },
                                 function () {
                                     location.href =
-                                        "/insumos/public/compras_contador";
+                                        "/compras_contador";
                                 }
                             );
                         });
@@ -1113,7 +1113,7 @@ const guardarRechazoContador = () => {
         },
         function () {
             $.ajax({
-                url: "/insumos/public/compras/acciones/contador",
+                url: "/compras/acciones/contador",
                 method: "POST",
                 data: datos,
             })
@@ -1129,7 +1129,7 @@ const guardarRechazoContador = () => {
                             },
                             function () {
                                 location.href =
-                                    "/insumos/public/compras_contador";
+                                    "/compras_contador";
                             }
                         );
                     } else {
@@ -1142,7 +1142,7 @@ const guardarRechazoContador = () => {
                             },
                             function () {
                                 location.href =
-                                    "/insumos/public/compras_contador";
+                                    "/compras_contador";
                             }
                         );
                     }
@@ -1156,7 +1156,7 @@ const guardarRechazoContador = () => {
                             confirmButtonText: "OK",
                         },
                         function () {
-                            location.href = "/insumos/public/compras_contador";
+                            location.href = "/compras_contador";
                         }
                     );
                 });

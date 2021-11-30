@@ -47,7 +47,7 @@ const insertarInsumo = async () => {
             },
             function () {
                 $.ajax({
-                    url: "/insumos/public/insumos/acciones/agregar",
+                    url: "/insumos/acciones/agregar",
                     method: "POST",
                     data: datos,
                 })
@@ -63,7 +63,7 @@ const insertarInsumo = async () => {
                                     confirmButtonText: "OK",
                                 },
                                 function () {
-                                    location.href = "/insumos/public/insumos";
+                                    location.href = "/insumos";
                                 }
                             );
                         } else {
@@ -75,7 +75,7 @@ const insertarInsumo = async () => {
                                     confirmButtonText: "OK",
                                 },
                                 function () {
-                                    location.href = "/insumos/public/insumos";
+                                    location.href = "/insumos";
                                 }
                             );
                         }
@@ -90,7 +90,7 @@ const insertarInsumo = async () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/insumos";
+                                location.href = "/insumos";
                             }
                         );
                     });
@@ -137,7 +137,7 @@ const modificarInsumo = async () => {
             },
             function () {
                 $.ajax({
-                    url: "/insumos/public/insumos/acciones/modificar",
+                    url: "/insumos/acciones/modificar",
                     method: "POST",
                     data: datos,
                 })
@@ -153,7 +153,7 @@ const modificarInsumo = async () => {
                                     confirmButtonText: "OK",
                                 },
                                 function () {
-                                    location.href = "/insumos/public/insumos";
+                                    location.href = "/insumos";
                                 }
                             );
                         } else {
@@ -165,7 +165,7 @@ const modificarInsumo = async () => {
                                     confirmButtonText: "OK",
                                 },
                                 function () {
-                                    location.href = "/insumos/public/insumos";
+                                    location.href = "/insumos";
                                 }
                             );
                         }
@@ -180,7 +180,7 @@ const modificarInsumo = async () => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/insumos";
+                                location.href = "/insumos";
                             }
                         );
                     });
@@ -214,7 +214,7 @@ const detalleInsumos = (uid) => {
     };
 
     $.ajax({
-        url: "/insumos/public/insumos/acciones/buscar",
+        url: "/insumos/acciones/buscar",
         method: "POST",
         data: datos,
     })
@@ -243,7 +243,7 @@ const detalleInsumos = (uid) => {
                         confirmButtonText: "OK",
                     },
                     function () {
-                        location.href = "/insumos/public/insumos";
+                        location.href = "/insumos";
                     }
                 );
             }
@@ -258,7 +258,7 @@ const detalleInsumos = (uid) => {
                     confirmButtonText: "OK",
                 },
                 function () {
-                    location.href = "/insumos/public/insumos";
+                    location.href = "/insumos";
                 }
             );
         });
@@ -283,7 +283,7 @@ const eliminarInsumos = (uid) => {
         },
         function () {
             $.ajax({
-                url: "/insumos/public/insumos/acciones/eliminar",
+                url: "/insumos/acciones/eliminar",
                 method: "POST",
                 data: datos,
             })
@@ -298,7 +298,7 @@ const eliminarInsumos = (uid) => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/insumos";
+                                location.href = "/insumos";
                             }
                         );
                     } else {
@@ -310,7 +310,7 @@ const eliminarInsumos = (uid) => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/insumos";
+                                location.href = "/insumos";
                             }
                         );
                     }
@@ -325,7 +325,7 @@ const eliminarInsumos = (uid) => {
                             confirmButtonText: "OK",
                         },
                         function () {
-                            location.href = "/insumos/public/insumos";
+                            location.href = "/insumos";
                         }
                     );
                 });
@@ -351,7 +351,7 @@ const activarInsumos = (uid) => {
         },
         function () {
             $.ajax({
-                url: "/insumos/public/insumos/acciones/activar",
+                url: "/insumos/acciones/activar",
                 method: "POST",
                 data: datos,
             })
@@ -366,7 +366,7 @@ const activarInsumos = (uid) => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/insumos";
+                                location.href = "/insumos";
                             }
                         );
                     } else {
@@ -378,7 +378,7 @@ const activarInsumos = (uid) => {
                                 confirmButtonText: "OK",
                             },
                             function () {
-                                location.href = "/insumos/public/insumos";
+                                location.href = "/insumos";
                             }
                         );
                     }
@@ -393,7 +393,7 @@ const activarInsumos = (uid) => {
                             confirmButtonText: "OK",
                         },
                         function () {
-                            location.href = "/insumos/public/insumos";
+                            location.href = "/insumos";
                         }
                     );
                 });
