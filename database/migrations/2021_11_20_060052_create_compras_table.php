@@ -19,10 +19,10 @@ class CreateComprasTable extends Migration
             $table->foreignId('id_insumo')->references('id')->on('insumos');
             $table->string('insumo');
             $table->string('clave');
-            $table->text('link_op1');
+            $table->string('link_op1');
             $table->integer('precio_op1');
             $table->integer('cantidad_solicitada');
-            $table->text('link_op2');
+            $table->string('link_op2');
             $table->integer('precio_op2');
             $table->enum('estatus', ['Activo','Inactivo']);
             $table->date('fecha_compra')->nullable()->default(date('Y-m-d'));

@@ -17,10 +17,14 @@ class Prestamos extends Model
      */
     protected $fillable = [
         'id',
-        'fechaSolicitud',
+        'motivo',
         'observaciones',
-        'fechaEntrega',
-        'id_empleado',
+        'fechaSolicitud',
+        'estatus',
+        'cantidad',
+        'motivo_cancelacion',
+        'motivo_devolucion',
+        'id_user',
         'id_insumo'
     ];
 
@@ -33,12 +37,4 @@ class Prestamos extends Model
         'created_at',
         'updated_at',
     ];
-    public function empleado()
-    {
-        return $this->belongsTo(Empleados::class, 'id_empleado');
-    }
-    public function insumo()
-    {
-        return $this->belongsTo(Insumos::class, 'id_empleado');
-    }
 }

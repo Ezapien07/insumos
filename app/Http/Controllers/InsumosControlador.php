@@ -89,4 +89,10 @@ class InsumosControlador extends Controller
             return $err;
         }
     }
+
+    public function getAll()
+    {
+        $insumos = Insumos::all()->where("estatus", "=", "Activo");
+        return response()->json(["insumos"=>$insumos],200);
+    }
 }
