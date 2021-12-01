@@ -97,29 +97,6 @@
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
-                                <div class="notify" id="puntito">
-                                </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox scale-up">
-                                <ul id="notificaciones">
-                                    <li>
-                                        <div class='drop-title'>
-                                            <h4 class="card-title">-</h4>
-                                            <span class='mail-desc text-center'>-</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class='drop-title'>
-                                            <h4 class="card-title">-</h4>
-                                            <span class='mail-desc text-center'>-</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->
@@ -216,9 +193,9 @@
 
                         @if( \Auth::user()->rol== "Administrador" OR \Auth::user()->rol== "Gerente")
                         <li class="nav-devider"></li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table-column-width"></i><span class="hide-menu">Prestamos</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table-column-width"></i><span class="hide-menu">Préstamos</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{URL::to('/liga')}}">Pantalla</a></li>
+                                <li><a href="{{URL::to('/reporte_prestamos')}}">Reporte de préstamos</a></li>
                             </ul>
                         </li>
                         @else
@@ -383,6 +360,12 @@
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        $('#tbreportePrestamos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel',  'pdf', 'print'
             ]
         });
     </script>

@@ -54,4 +54,10 @@ class ReportesController extends Controller
         $data['insumos_total'] = $insumos_total;
         return $data;
     }
+
+    public function consultarPrestamos()
+    {
+        $prestamos = DB::select("SELECT insumos.nombre, insumos.descripcion, insumos.tipo_producto, IF(prestamos.cantidad = 0 || prestamos.cantidad = '' || ISNULL(prestamos.cantidad), 1, prestamos.cantidad) AS cantidad,  CONCAT(empleados.nombre, ' ', empleados.apePaterno, ' ', empleados.apeMaterno) AS empleado,  prestamos.fechaSolicitud, IF(validacion_prestamo.id = '' || (SELECT COUNT(v.id) FROM validacion_prestamo AS v WHERE v.id_prestamos = prestamos.id) = 0,  'En revisión',  validacion_prestamo.estatus) AS estatus FROM prestamos INNER JOIN insumos ON prestamos.id_insumo = insumos.id  INNER JOIN empleados ON empleados.id_user = prestamos.id_user LEFT JOIN validacion_prestamo ON validacion_prestamo.id_prestamos");
+        return view('reportes.reporte_prestamos', compact('prestamos'));
+    }
 }
